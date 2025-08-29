@@ -1,5 +1,16 @@
 import React, { useState } from 'react';
 import { Shield, Upload, BarChart3, Users, AlertTriangle, CheckCircle, XCircle, Clock, TrendingUp, MapPin, Search, FileText, Download, Eye } from 'lucide-react';
+import { 
+  RiskDistributionChart, 
+  FraudTrendChart, 
+  ModelPerformanceChart, 
+  GeographicRiskChart, 
+  GeographicHeatmapChart, 
+  SimilarityAnalysisChart, 
+  ProcessingTimeChart, 
+  RealTimeMonitoringChart,
+  FeatureImportanceChart 
+} from './components/Charts';
 
 const App = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -180,12 +191,39 @@ const App = () => {
                 <h2 className="text-lg lg:text-xl font-bold text-gray-900">Risk Distribution</h2>
                 <p className="text-sm text-gray-600 mt-1">Current month analysis breakdown</p>
               </div>
-              <div className="p-4 lg:p-6">
+              <div className="p-4 lg:p-6 space-y-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                   <RiskCard level="Critical" count="89" percentage="7.1" color="#ef4444" />
                   <RiskCard level="High" count="156" percentage="12.5" color="#f97316" />
                   <RiskCard level="Medium" count="234" percentage="18.7" color="#eab308" />
                   <RiskCard level="Low" count="768" percentage="61.7" color="#22c55e" />
+                </div>
+                <div>
+                  <h3 className="text-md font-semibold text-gray-900 mb-3">Risk Distribution Visualization</h3>
+                  <RiskDistributionChart />
+                </div>
+              </div>
+            </div>
+
+            {/* Fraud Trends */}
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+              <div className="bg-white rounded-xl shadow-sm border border-gray-100">
+                <div className="p-4 lg:p-6 border-b border-gray-100">
+                  <h3 className="text-lg font-bold text-gray-900">Fraud Trends</h3>
+                  <p className="text-sm text-gray-600 mt-1">Monthly fraud detection patterns</p>
+                </div>
+                <div className="p-4 lg:p-6">
+                  <FraudTrendChart />
+                </div>
+              </div>
+
+              <div className="bg-white rounded-xl shadow-sm border border-gray-100">
+                <div className="p-4 lg:p-6 border-b border-gray-100">
+                  <h3 className="text-lg font-bold text-gray-900">Real-Time Monitoring</h3>
+                  <p className="text-sm text-gray-600 mt-1">Live transaction and fraud rate tracking</p>
+                </div>
+                <div className="p-4 lg:p-6">
+                  <RealTimeMonitoringChart />
                 </div>
               </div>
             </div>
@@ -321,6 +359,18 @@ const App = () => {
                         </div>
                       </div>
 
+                      {/* Analysis Charts */}
+                      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+                        <div className="bg-gray-50 rounded-lg p-4">
+                          <h4 className="font-semibold text-gray-900 mb-3">Processing Breakdown</h4>
+                          <ProcessingTimeChart />
+                        </div>
+                        <div className="bg-gray-50 rounded-lg p-4">
+                          <h4 className="font-semibold text-gray-900 mb-3">Feature Importance</h4>
+                          <FeatureImportanceChart />
+                        </div>
+                      </div>
+
                       <div className="flex flex-col sm:flex-row gap-3">
                         <button className="flex items-center justify-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
                           <Download size={16} />
@@ -338,10 +388,15 @@ const App = () => {
             </div>
 
             {/* Model Information */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
               <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 lg:p-6">
-                <h3 className="text-lg font-bold text-gray-900 mb-4">Model Features</h3>
-                <div className="space-y-3">
+                <h3 className="text-lg font-bold text-gray-900 mb-4">Model Performance</h3>
+                <ModelPerformanceChart />
+              </div>
+
+              <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 lg:p-6">
+                <h3 className="text-lg font-bold text-gray-900 mb-4">Key Features</h3>
+                <div className="space-y-3 mt-8">
                   {[
                     'Document Quality Assessment',
                     'Financial Risk Scoring',
@@ -353,24 +408,6 @@ const App = () => {
                     <div key={index} className="flex items-center gap-3">
                       <CheckCircle className="w-4 h-4 text-green-500" />
                       <span className="text-sm text-gray-700">{feature}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 lg:p-6">
-                <h3 className="text-lg font-bold text-gray-900 mb-4">Risk Categories</h3>
-                <div className="space-y-3">
-                  {[
-                    { level: 'CRITICAL', range: '0.8 - 1.0', color: 'text-red-600' },
-                    { level: 'HIGH', range: '0.6 - 0.8', color: 'text-orange-600' },
-                    { level: 'MEDIUM', range: '0.4 - 0.6', color: 'text-yellow-600' },
-                    { level: 'LOW', range: '0.2 - 0.4', color: 'text-blue-600' },
-                    { level: 'MINIMAL', range: '0.0 - 0.2', color: 'text-green-600' }
-                  ].map((risk, index) => (
-                    <div key={index} className="flex items-center justify-between">
-                      <span className={`font-medium ${risk.color}`}>{risk.level}</span>
-                      <span className="text-sm text-gray-500">{risk.range}</span>
                     </div>
                   ))}
                 </div>
@@ -424,6 +461,29 @@ const App = () => {
                       </div>
                     </div>
                   </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Geographic Visualization */}
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+              <div className="bg-white rounded-xl shadow-sm border border-gray-100">
+                <div className="p-4 lg:p-6 border-b border-gray-100">
+                  <h3 className="text-lg font-bold text-gray-900">Risk vs Cases Analysis</h3>
+                  <p className="text-sm text-gray-600 mt-1">Correlation between case volume and fraud rates</p>
+                </div>
+                <div className="p-4 lg:p-6">
+                  <GeographicRiskChart />
+                </div>
+              </div>
+
+              <div className="bg-white rounded-xl shadow-sm border border-gray-100">
+                <div className="p-4 lg:p-6 border-b border-gray-100">
+                  <h3 className="text-lg font-bold text-gray-900">Regional Risk Heatmap</h3>
+                  <p className="text-sm text-gray-600 mt-1">Risk distribution across geographic regions</p>
+                </div>
+                <div className="p-4 lg:p-6">
+                  <GeographicHeatmapChart />
                 </div>
               </div>
             </div>
@@ -525,6 +585,17 @@ const App = () => {
                     </div>
                   </div>
                 </div>
+              </div>
+            </div>
+
+            {/* Customer Similarity Visualization */}
+            <div className="bg-white rounded-xl shadow-sm border border-gray-100">
+              <div className="p-4 lg:p-6 border-b border-gray-100">
+                <h3 className="text-lg font-bold text-gray-900">Similarity Distribution Analysis</h3>
+                <p className="text-sm text-gray-600 mt-1">Customer similarity ranges and associated risk patterns</p>
+              </div>
+              <div className="p-4 lg:p-6">
+                <SimilarityAnalysisChart />
               </div>
             </div>
 
