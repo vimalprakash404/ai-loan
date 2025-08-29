@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Shield, Upload, BarChart3, Users, AlertTriangle, CheckCircle, XCircle, Clock, TrendingUp, MapPin, Search, FileText, Download, Eye } from 'lucide-react';
+import { Shield, Upload, BarChart3, Users, AlertTriangle, CheckCircle, XCircle, Clock, TrendingUp, MapPin, Search, FileText, Download, Eye, Plus, PlayCircle, Pause, RotateCcw } from 'lucide-react';
 import { 
   RiskDistributionChart, 
   FraudTrendChart, 
@@ -13,10 +13,54 @@ import {
 } from './components/Charts';
 
 const App = () => {
-  const [activeTab, setActiveTab] = useState('dashboard');
+  const [activeTab, setActiveTab] = useState('batches');
+  const [selectedBatch, setSelectedBatch] = useState(null);
+  const [currentStep, setCurrentStep] = useState(1);
   const [uploadedFile, setUploadedFile] = useState(null);
-  const [analysisResults, setAnalysisResults] = useState(null);
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
+
+  // Sample batch data
+  const [batches, setBatches] = useState([
+    {
+      id: 'BATCH-001',
+      name: 'Customer Applications - Q1 2025',
+      uploadDate: '2025-01-15',
+      totalRecords: 1247,
+      status: 'completed',
+      currentStep: 3,
+      results: {
+        fraudDetection: { processed: 1247, fraudDetected: 89, accuracy: 94.7 },
+        marketIntel: { analyzed: 1247, highRiskAreas: 12, avgRiskScore: 6.2 },
+        customerSearch: { processed: 1247, similarityMatches: 156, avgSimilarity: 0.73 }
+      }
+    },
+    {
+      id: 'BATCH-002',
+      name: 'Loan Applications - December',
+      uploadDate: '2024-12-28',
+      totalRecords: 892,
+      status: 'processing',
+      currentStep: 2,
+      results: {
+        fraudDetection: { processed: 892, fraudDetected: 67, accuracy: 93.2 },
+        marketIntel: { analyzed: 450, highRiskAreas: 8, avgRiskScore: 5.8 },
+        customerSearch: null
+      }
+    },
+    {
+      id: 'BATCH-003',
+      name: 'Insurance Claims - January',
+      uploadDate: '2025-01-10',
+      totalRecords: 2156,
+      status: 'pending',
+      currentStep: 1,
+      results: {
+        fraudDetection: null,
+        marketIntel: null,
+        customerSearch: null
+      }
+    }
+  ]);
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
@@ -25,27 +69,83 @@ const App = () => {
     }
   };
 
-  const simulateAnalysis = () => {
-    setIsAnalyzing(true);
-    setTimeout(() => {
-      setAnalysisResults({
-        totalRecords: 1247,
-        fraudDetected: 89,
-        highRisk: 156,
-        mediumRisk: 234,
-        lowRisk: 768,
-        accuracy: 94.7,
-        processingTime: '2.3s'
-      });
-      setIsAnalyzing(false);
-    }, 3000);
+  const createNewBatch = () => {
+    if (!uploadedFile) return;
+    
+    const newBatch = {
+      id: `BATCH-${String(batches.length + 1).padStart(3, '0')}`,
+      name: uploadedFile.name.replace('.csv', ''),
+      uploadDate: new Date().toISOString().split('T')[0],
+      totalRecords: Math.floor(Math.random() * 2000) + 500,
+      status: 'pending',
+      currentStep: 1,
+      results: {
+        fraudDetection: null,
+        marketIntel: null,
+        customerSearch: null
+      }
+    };
+    
+    setBatches([newBatch, ...batches]);
+    setUploadedFile(null);
+    setSelectedBatch(newBatch);
+    setCurrentStep(1);
+    setActiveTab('fraud-detection');
   };
 
-  const TabButton = ({ id, label, icon: Icon, isActive, onClick }) => (
+  const processStep = () => {
+    setIsProcessing(true);
+    setTimeout(() => {
+      const updatedBatches = batches.map(batch => {
+        if (batch.id === selectedBatch.id) {
+          const updatedBatch = { ...batch };
+          
+          if (currentStep === 1) {
+            updatedBatch.results.fraudDetection = {
+              processed: batch.totalRecords,
+              fraudDetected: Math.floor(batch.totalRecords * 0.07),
+              accuracy: 94.7
+            };
+            updatedBatch.currentStep = 2;
+          } else if (currentStep === 2) {
+            updatedBatch.results.marketIntel = {
+              analyzed: batch.totalRecords,
+              highRiskAreas: Math.floor(Math.random() * 15) + 5,
+              avgRiskScore: (Math.random() * 3 + 4).toFixed(1)
+            };
+            updatedBatch.currentStep = 3;
+          } else if (currentStep === 3) {
+            updatedBatch.results.customerSearch = {
+              processed: batch.totalRecords,
+              similarityMatches: Math.floor(batch.totalRecords * 0.12),
+              avgSimilarity: (Math.random() * 0.3 + 0.6).toFixed(2)
+            };
+            updatedBatch.status = 'completed';
+          }
+          
+          return updatedBatch;
+        }
+        return batch;
+      });
+      
+      setBatches(updatedBatches);
+      setSelectedBatch(updatedBatches.find(b => b.id === selectedBatch.id));
+      
+      if (currentStep < 3) {
+        setCurrentStep(currentStep + 1);
+      }
+      setIsProcessing(false);
+    }, 2000);
+  };
+
+  const TabButton = ({ id, label, icon: Icon, isActive, onClick, disabled = false }) => (
     <button
-      onClick={() => onClick(id)}
+      onClick={() => !disabled && onClick(id)}
+      disabled={disabled}
       className={`flex items-center gap-2 px-3 py-2 rounded-lg font-medium transition-all duration-200 ${
-        isActive
+        disabled 
+          ? 'text-gray-400 cursor-not-allowed'
+          : isActive
           ? 'bg-blue-600 text-white shadow-lg'
           : 'text-gray-600 hover:text-blue-600 hover:bg-blue-50'
       }`}
@@ -55,32 +155,108 @@ const App = () => {
     </button>
   );
 
-  const StatCard = ({ title, value, subtitle, icon: Icon, color = 'blue' }) => (
-    <div className="bg-white rounded-xl p-4 lg:p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200">
-      <div className="flex items-center justify-between mb-3">
-        <div className={`p-2 rounded-lg bg-${color}-100`}>
-          <Icon className={`w-5 h-5 text-${color}-600`} />
-        </div>
-        <span className="text-xs text-gray-500 font-medium">{subtitle}</span>
+  const StepIndicator = ({ stepNumber, title, isActive, isCompleted, isDisabled }) => (
+    <div className={`flex items-center gap-3 p-3 rounded-lg border-2 transition-all ${
+      isActive ? 'border-blue-500 bg-blue-50' :
+      isCompleted ? 'border-green-500 bg-green-50' :
+      isDisabled ? 'border-gray-200 bg-gray-50' : 'border-gray-200'
+    }`}>
+      <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm ${
+        isActive ? 'bg-blue-500 text-white' :
+        isCompleted ? 'bg-green-500 text-white' :
+        isDisabled ? 'bg-gray-300 text-gray-500' : 'bg-gray-200 text-gray-600'
+      }`}>
+        {isCompleted ? <CheckCircle size={16} /> : stepNumber}
       </div>
-      <div className="space-y-1">
-        <h3 className="text-lg lg:text-xl font-bold text-gray-900">{value}</h3>
-        <p className="text-sm text-gray-600">{title}</p>
+      <div>
+        <h4 className={`font-semibold ${
+          isActive ? 'text-blue-900' :
+          isCompleted ? 'text-green-900' :
+          isDisabled ? 'text-gray-500' : 'text-gray-700'
+        }`}>{title}</h4>
+        <p className={`text-xs ${
+          isActive ? 'text-blue-700' :
+          isCompleted ? 'text-green-700' :
+          isDisabled ? 'text-gray-400' : 'text-gray-500'
+        }`}>
+          {isActive ? 'In Progress' : isCompleted ? 'Completed' : 'Pending'}
+        </p>
       </div>
     </div>
   );
 
-  const RiskCard = ({ level, count, percentage, color }) => (
-    <div className="bg-white rounded-lg p-4 border-l-4" style={{ borderLeftColor: color }}>
-      <div className="flex items-center justify-between">
-        <div>
-          <h4 className="font-semibold text-gray-900">{level} Risk</h4>
-          <p className="text-2xl font-bold" style={{ color }}>{count}</p>
+  const BatchCard = ({ batch, onSelect }) => (
+    <div 
+      className="bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all duration-200 cursor-pointer"
+      onClick={() => onSelect(batch)}
+    >
+      <div className="p-4 lg:p-6">
+        <div className="flex items-start justify-between mb-3">
+          <div>
+            <h3 className="text-lg font-bold text-gray-900">{batch.name}</h3>
+            <p className="text-sm text-gray-500">{batch.id}</p>
+          </div>
+          <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+            batch.status === 'completed' ? 'bg-green-100 text-green-700' :
+            batch.status === 'processing' ? 'bg-blue-100 text-blue-700' :
+            'bg-gray-100 text-gray-700'
+          }`}>
+            {batch.status.toUpperCase()}
+          </span>
         </div>
-        <div className="text-right">
-          <p className="text-sm text-gray-500">of total</p>
-          <p className="text-lg font-semibold" style={{ color }}>{percentage}%</p>
+        
+        <div className="grid grid-cols-2 gap-4 mb-4">
+          <div>
+            <p className="text-xs text-gray-500">Upload Date</p>
+            <p className="font-medium text-gray-900">{batch.uploadDate}</p>
+          </div>
+          <div>
+            <p className="text-xs text-gray-500">Total Records</p>
+            <p className="font-medium text-gray-900">{batch.totalRecords.toLocaleString()}</p>
+          </div>
         </div>
+
+        {/* Progress Steps */}
+        <div className="space-y-2">
+          <div className="flex items-center justify-between text-xs text-gray-500 mb-1">
+            <span>Progress</span>
+            <span>{batch.currentStep}/3 Steps</span>
+          </div>
+          <div className="flex gap-1">
+            {[1, 2, 3].map(step => (
+              <div 
+                key={step}
+                className={`h-2 flex-1 rounded-full ${
+                  step <= batch.currentStep ? 'bg-blue-500' : 'bg-gray-200'
+                }`}
+              />
+            ))}
+          </div>
+          <div className="flex justify-between text-xs text-gray-500">
+            <span>Fraud Detection</span>
+            <span>Market Intel</span>
+            <span>Customer Search</span>
+          </div>
+        </div>
+
+        {batch.status === 'completed' && batch.results.fraudDetection && (
+          <div className="mt-4 pt-4 border-t border-gray-100">
+            <div className="grid grid-cols-3 gap-2 text-center">
+              <div>
+                <p className="text-xs text-gray-500">Fraud Detected</p>
+                <p className="font-bold text-red-600">{batch.results.fraudDetection.fraudDetected}</p>
+              </div>
+              <div>
+                <p className="text-xs text-gray-500">Risk Areas</p>
+                <p className="font-bold text-orange-600">{batch.results.marketIntel?.highRiskAreas || 0}</p>
+              </div>
+              <div>
+                <p className="text-xs text-gray-500">Similarities</p>
+                <p className="font-bold text-purple-600">{batch.results.customerSearch?.similarityMatches || 0}</p>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -101,7 +277,14 @@ const App = () => {
               </div>
             </div>
             <div className="flex items-center gap-4">
-              <div className="hidden md:flex items-center gap-2 text-sm text-gray-600">
+              {selectedBatch && (
+                <div className="hidden md:flex items-center gap-2 text-sm text-gray-600">
+                  <span className="font-medium">{selectedBatch.id}</span>
+                  <span className="text-gray-400">•</span>
+                  <span>Step {currentStep}/3</span>
+                </div>
+              )}
+              <div className="flex items-center gap-2 text-sm text-gray-600">
                 <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                 System Online
               </div>
@@ -118,32 +301,35 @@ const App = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex gap-1 py-3 overflow-x-auto">
             <TabButton
-              id="dashboard"
-              label="Dashboard"
-              icon={BarChart3}
-              isActive={activeTab === 'dashboard'}
+              id="batches"
+              label="Batches"
+              icon={FileText}
+              isActive={activeTab === 'batches'}
               onClick={setActiveTab}
             />
             <TabButton
               id="fraud-detection"
-              label="Fraud Detection"
+              label="Step 1: Fraud Detection"
               icon={Shield}
               isActive={activeTab === 'fraud-detection'}
               onClick={setActiveTab}
+              disabled={!selectedBatch}
             />
             <TabButton
               id="market-intelligence"
-              label="Market Intel"
+              label="Step 2: Market Intel"
               icon={MapPin}
               isActive={activeTab === 'market-intelligence'}
               onClick={setActiveTab}
+              disabled={!selectedBatch}
             />
             <TabButton
               id="customer-search"
-              label="Customer Search"
+              label="Step 3: Customer Search"
               icon={Search}
               isActive={activeTab === 'customer-search'}
               onClick={setActiveTab}
+              disabled={!selectedBatch}
             />
           </div>
         </div>
@@ -151,66 +337,121 @@ const App = () => {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-8">
-        {activeTab === 'dashboard' && (
+        {activeTab === 'batches' && (
           <div className="space-y-6 lg:space-y-8">
-            {/* Stats Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
-              <StatCard
-                title="Total Processed"
-                value="12,847"
-                subtitle="This Month"
-                icon={FileText}
-                color="blue"
-              />
-              <StatCard
-                title="Fraud Detected"
-                value="289"
-                subtitle="2.25% Rate"
-                icon={AlertTriangle}
-                color="red"
-              />
-              <StatCard
-                title="Accuracy Rate"
-                value="94.7%"
-                subtitle="ML Model"
-                icon={TrendingUp}
-                color="green"
-              />
-              <StatCard
-                title="Processing Time"
-                value="1.2s"
-                subtitle="Average"
-                icon={Clock}
-                color="purple"
-              />
-            </div>
-
-            {/* Risk Distribution */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100">
-              <div className="p-4 lg:p-6 border-b border-gray-100">
-                <h2 className="text-lg lg:text-xl font-bold text-gray-900">Risk Distribution</h2>
-                <p className="text-sm text-gray-600 mt-1">Current month analysis breakdown</p>
+            {/* Header with Upload */}
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+              <div>
+                <h2 className="text-2xl font-bold text-gray-900">Batch Processing</h2>
+                <p className="text-gray-600 mt-1">Manage and monitor your fraud detection batches</p>
               </div>
-              <div className="p-4 lg:p-6 space-y-6">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                  <RiskCard level="Critical" count="89" percentage="7.1" color="#ef4444" />
-                  <RiskCard level="High" count="156" percentage="12.5" color="#f97316" />
-                  <RiskCard level="Medium" count="234" percentage="18.7" color="#eab308" />
-                  <RiskCard level="Low" count="768" percentage="61.7" color="#22c55e" />
+              
+              <div className="flex flex-col sm:flex-row gap-3">
+                <div className="flex items-center gap-2">
+                  <input
+                    type="file"
+                    accept=".csv"
+                    onChange={handleFileUpload}
+                    className="hidden"
+                    id="batch-upload"
+                  />
+                  <label
+                    htmlFor="batch-upload"
+                    className="inline-flex items-center gap-2 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
+                  >
+                    <Upload size={16} />
+                    Upload CSV
+                  </label>
                 </div>
-                <div>
-                  <h3 className="text-md font-semibold text-gray-900 mb-3">Risk Distribution Visualization</h3>
-                  <RiskDistributionChart />
-                </div>
+                
+                {uploadedFile && (
+                  <button
+                    onClick={createNewBatch}
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                  >
+                    <Plus size={16} />
+                    Create Batch
+                  </button>
+                )}
               </div>
             </div>
 
-            {/* Fraud Trends */}
+            {uploadedFile && (
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                <div className="flex items-center gap-3">
+                  <FileText className="w-5 h-5 text-blue-600" />
+                  <div>
+                    <p className="font-medium text-blue-900">{uploadedFile.name}</p>
+                    <p className="text-sm text-blue-700">{(uploadedFile.size / 1024).toFixed(1)} KB • Ready to create batch</p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Batch Statistics */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="bg-white rounded-xl p-4 lg:p-6 shadow-sm border border-gray-100">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="p-2 rounded-lg bg-blue-100">
+                    <FileText className="w-5 h-5 text-blue-600" />
+                  </div>
+                </div>
+                <h3 className="text-lg lg:text-xl font-bold text-gray-900">{batches.length}</h3>
+                <p className="text-sm text-gray-600">Total Batches</p>
+              </div>
+              
+              <div className="bg-white rounded-xl p-4 lg:p-6 shadow-sm border border-gray-100">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="p-2 rounded-lg bg-green-100">
+                    <CheckCircle className="w-5 h-5 text-green-600" />
+                  </div>
+                </div>
+                <h3 className="text-lg lg:text-xl font-bold text-gray-900">
+                  {batches.filter(b => b.status === 'completed').length}
+                </h3>
+                <p className="text-sm text-gray-600">Completed</p>
+              </div>
+              
+              <div className="bg-white rounded-xl p-4 lg:p-6 shadow-sm border border-gray-100">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="p-2 rounded-lg bg-orange-100">
+                    <Clock className="w-5 h-5 text-orange-600" />
+                  </div>
+                </div>
+                <h3 className="text-lg lg:text-xl font-bold text-gray-900">
+                  {batches.filter(b => b.status === 'processing').length}
+                </h3>
+                <p className="text-sm text-gray-600">Processing</p>
+              </div>
+              
+              <div className="bg-white rounded-xl p-4 lg:p-6 shadow-sm border border-gray-100">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="p-2 rounded-lg bg-gray-100">
+                    <Pause className="w-5 h-5 text-gray-600" />
+                  </div>
+                </div>
+                <h3 className="text-lg lg:text-xl font-bold text-gray-900">
+                  {batches.filter(b => b.status === 'pending').length}
+                </h3>
+                <p className="text-sm text-gray-600">Pending</p>
+              </div>
+            </div>
+
+            {/* Batch List */}
+            <div className="space-y-4">
+              <h3 className="text-lg font-bold text-gray-900">Recent Batches</h3>
+              <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
+                {batches.map((batch) => (
+                  <BatchCard key={batch.id} batch={batch} onSelect={setSelectedBatch} />
+                ))}
+              </div>
+            </div>
+
+            {/* Overall Analytics */}
             <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
               <div className="bg-white rounded-xl shadow-sm border border-gray-100">
                 <div className="p-4 lg:p-6 border-b border-gray-100">
-                  <h3 className="text-lg font-bold text-gray-900">Fraud Trends</h3>
-                  <p className="text-sm text-gray-600 mt-1">Monthly fraud detection patterns</p>
+                  <h3 className="text-lg font-bold text-gray-900">Batch Processing Trends</h3>
                 </div>
                 <div className="p-4 lg:p-6">
                   <FraudTrendChart />
@@ -219,434 +460,561 @@ const App = () => {
 
               <div className="bg-white rounded-xl shadow-sm border border-gray-100">
                 <div className="p-4 lg:p-6 border-b border-gray-100">
-                  <h3 className="text-lg font-bold text-gray-900">Real-Time Monitoring</h3>
-                  <p className="text-sm text-gray-600 mt-1">Live transaction and fraud rate tracking</p>
+                  <h3 className="text-lg font-bold text-gray-900">System Performance</h3>
                 </div>
                 <div className="p-4 lg:p-6">
-                  <RealTimeMonitoringChart />
+                  <ModelPerformanceChart />
                 </div>
-              </div>
-            </div>
-
-            {/* Recent Activity */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100">
-              <div className="p-4 lg:p-6 border-b border-gray-100">
-                <h2 className="text-lg lg:text-xl font-bold text-gray-900">Recent Activity</h2>
-              </div>
-              <div className="divide-y divide-gray-100">
-                {[
-                  { id: 'CUST-001', risk: 'HIGH', score: 0.87, time: '2 min ago', status: 'flagged' },
-                  { id: 'CUST-002', risk: 'LOW', score: 0.23, time: '5 min ago', status: 'approved' },
-                  { id: 'CUST-003', risk: 'MEDIUM', score: 0.54, time: '8 min ago', status: 'review' },
-                  { id: 'CUST-004', risk: 'CRITICAL', score: 0.94, time: '12 min ago', status: 'blocked' },
-                ].map((item) => (
-                  <div key={item.id} className="p-4 lg:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                    <div className="flex items-center gap-3">
-                      <div className={`w-3 h-3 rounded-full ${
-                        item.status === 'flagged' ? 'bg-red-500' :
-                        item.status === 'approved' ? 'bg-green-500' :
-                        item.status === 'review' ? 'bg-yellow-500' : 'bg-red-600'
-                      }`}></div>
-                      <div>
-                        <p className="font-medium text-gray-900">{item.id}</p>
-                        <p className="text-sm text-gray-500">{item.time}</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <div className="text-right">
-                        <p className="text-sm font-medium text-gray-900">Risk Score: {item.score}</p>
-                        <p className={`text-xs font-medium ${
-                          item.risk === 'CRITICAL' ? 'text-red-600' :
-                          item.risk === 'HIGH' ? 'text-orange-600' :
-                          item.risk === 'MEDIUM' ? 'text-yellow-600' : 'text-green-600'
-                        }`}>{item.risk}</p>
-                      </div>
-                      <button className="p-2 text-gray-400 hover:text-gray-600 transition-colors">
-                        <Eye size={16} />
-                      </button>
-                    </div>
-                  </div>
-                ))}
               </div>
             </div>
           </div>
         )}
 
-        {activeTab === 'fraud-detection' && (
+        {activeTab === 'fraud-detection' && selectedBatch && (
           <div className="space-y-6 lg:space-y-8">
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100">
-              <div className="p-4 lg:p-6 border-b border-gray-100">
-                <h2 className="text-lg lg:text-xl font-bold text-gray-900">ML-Based Fraud Detection</h2>
-                <p className="text-sm text-gray-600 mt-1">Upload customer data for real-time fraud analysis</p>
-              </div>
-              <div className="p-4 lg:p-6">
-                <div className="space-y-6">
-                  {/* Upload Section */}
-                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 lg:p-8 text-center hover:border-blue-400 transition-colors">
-                    <Upload className="w-8 h-8 lg:w-12 lg:h-12 text-gray-400 mx-auto mb-4" />
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">Upload Customer Data</h3>
-                    <p className="text-sm text-gray-600 mb-4">Upload CSV files with customer information for batch analysis</p>
-                    <input
-                      type="file"
-                      accept=".csv"
-                      onChange={handleFileUpload}
-                      className="hidden"
-                      id="file-upload"
-                    />
-                    <label
-                      htmlFor="file-upload"
-                      className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 cursor-pointer transition-colors"
+            {/* Batch Header */}
+            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 lg:p-6">
+              <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                <div>
+                  <h2 className="text-xl font-bold text-gray-900">Step 1: Fraud Detection</h2>
+                  <p className="text-gray-600">Batch: {selectedBatch.name} ({selectedBatch.id})</p>
+                </div>
+                
+                <div className="flex items-center gap-3">
+                  {currentStep === 1 && !selectedBatch.results.fraudDetection && (
+                    <button
+                      onClick={processStep}
+                      disabled={isProcessing}
+                      className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors"
                     >
-                      <Upload size={16} />
-                      Choose CSV File
-                    </label>
-                  </div>
-
-                  {uploadedFile && (
-                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                        <div className="flex items-center gap-3">
-                          <FileText className="w-5 h-5 text-blue-600" />
-                          <div>
-                            <p className="font-medium text-blue-900">{uploadedFile.name}</p>
-                            <p className="text-sm text-blue-700">{(uploadedFile.size / 1024).toFixed(1)} KB</p>
-                          </div>
-                        </div>
-                        <button
-                          onClick={simulateAnalysis}
-                          disabled={isAnalyzing}
-                          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center gap-2"
-                        >
-                          {isAnalyzing ? (
-                            <>
-                              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                              Analyzing...
-                            </>
-                          ) : (
-                            <>
-                              <BarChart3 size={16} />
-                              Start Analysis
-                            </>
-                          )}
-                        </button>
-                      </div>
-                    </div>
+                      {isProcessing ? (
+                        <>
+                          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                          Processing...
+                        </>
+                      ) : (
+                        <>
+                          <PlayCircle size={16} />
+                          Start Analysis
+                        </>
+                      )}
+                    </button>
                   )}
-
-                  {analysisResults && (
-                    <div className="space-y-4">
-                      <div className="flex items-center gap-2 text-green-600">
-                        <CheckCircle size={20} />
-                        <span className="font-semibold">Analysis Complete</span>
-                      </div>
-                      
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                        <div className="bg-gray-50 rounded-lg p-4">
-                          <p className="text-sm text-gray-600">Total Records</p>
-                          <p className="text-2xl font-bold text-gray-900">{analysisResults.totalRecords.toLocaleString()}</p>
-                        </div>
-                        <div className="bg-red-50 rounded-lg p-4">
-                          <p className="text-sm text-red-600">Fraud Detected</p>
-                          <p className="text-2xl font-bold text-red-600">{analysisResults.fraudDetected}</p>
-                        </div>
-                        <div className="bg-green-50 rounded-lg p-4">
-                          <p className="text-sm text-green-600">Model Accuracy</p>
-                          <p className="text-2xl font-bold text-green-600">{analysisResults.accuracy}%</p>
-                        </div>
-                        <div className="bg-blue-50 rounded-lg p-4">
-                          <p className="text-sm text-blue-600">Processing Time</p>
-                          <p className="text-2xl font-bold text-blue-600">{analysisResults.processingTime}</p>
-                        </div>
-                      </div>
-
-                      {/* Analysis Charts */}
-                      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-                        <div className="bg-gray-50 rounded-lg p-4">
-                          <h4 className="font-semibold text-gray-900 mb-3">Processing Breakdown</h4>
-                          <ProcessingTimeChart />
-                        </div>
-                        <div className="bg-gray-50 rounded-lg p-4">
-                          <h4 className="font-semibold text-gray-900 mb-3">Feature Importance</h4>
-                          <FeatureImportanceChart />
-                        </div>
-                      </div>
-
-                      <div className="flex flex-col sm:flex-row gap-3">
-                        <button className="flex items-center justify-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
-                          <Download size={16} />
-                          Download Report
-                        </button>
-                        <button className="flex items-center justify-center gap-2 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
-                          <Eye size={16} />
-                          View Details
-                        </button>
-                      </div>
+                  
+                  {selectedBatch.results.fraudDetection && (
+                    <div className="flex items-center gap-2 text-green-600">
+                      <CheckCircle size={20} />
+                      <span className="font-semibold">Completed</span>
                     </div>
                   )}
                 </div>
               </div>
             </div>
 
-            {/* Model Information */}
-            <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-              <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 lg:p-6">
-                <h3 className="text-lg font-bold text-gray-900 mb-4">Model Performance</h3>
-                <ModelPerformanceChart />
-              </div>
+            {/* Step Progress */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+              <StepIndicator
+                stepNumber={1}
+                title="Fraud Detection"
+                isActive={currentStep === 1}
+                isCompleted={selectedBatch.results.fraudDetection !== null}
+                isDisabled={false}
+              />
+              <StepIndicator
+                stepNumber={2}
+                title="Market Intelligence"
+                isActive={currentStep === 2}
+                isCompleted={selectedBatch.results.marketIntel !== null}
+                isDisabled={selectedBatch.results.fraudDetection === null}
+              />
+              <StepIndicator
+                stepNumber={3}
+                title="Customer Search"
+                isActive={currentStep === 3}
+                isCompleted={selectedBatch.results.customerSearch !== null}
+                isDisabled={selectedBatch.results.marketIntel === null}
+              />
+            </div>
 
-              <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 lg:p-6">
-                <h3 className="text-lg font-bold text-gray-900 mb-4">Key Features</h3>
-                <div className="space-y-3 mt-8">
-                  {[
-                    'Document Quality Assessment',
-                    'Financial Risk Scoring',
-                    'Employment Verification',
-                    'Biometric Verification',
-                    'Digital Footprint Analysis',
-                    'Identity Verification'
-                  ].map((feature, index) => (
-                    <div key={index} className="flex items-center gap-3">
-                      <CheckCircle className="w-4 h-4 text-green-500" />
-                      <span className="text-sm text-gray-700">{feature}</span>
-                    </div>
-                  ))}
+            {/* Results */}
+            {selectedBatch.results.fraudDetection && (
+              <div className="space-y-6">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div className="bg-white rounded-lg p-4 border border-gray-200">
+                    <p className="text-sm text-gray-600">Records Processed</p>
+                    <p className="text-2xl font-bold text-gray-900">{selectedBatch.results.fraudDetection.processed.toLocaleString()}</p>
+                  </div>
+                  <div className="bg-white rounded-lg p-4 border border-gray-200">
+                    <p className="text-sm text-gray-600">Fraud Detected</p>
+                    <p className="text-2xl font-bold text-red-600">{selectedBatch.results.fraudDetection.fraudDetected}</p>
+                  </div>
+                  <div className="bg-white rounded-lg p-4 border border-gray-200">
+                    <p className="text-sm text-gray-600">Model Accuracy</p>
+                    <p className="text-2xl font-bold text-green-600">{selectedBatch.results.fraudDetection.accuracy}%</p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+                  <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 lg:p-6">
+                    <h3 className="text-lg font-bold text-gray-900 mb-4">Risk Distribution</h3>
+                    <RiskDistributionChart />
+                  </div>
+                  
+                  <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 lg:p-6">
+                    <h3 className="text-lg font-bold text-gray-900 mb-4">Feature Importance</h3>
+                    <FeatureImportanceChart />
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
         )}
 
-        {activeTab === 'market-intelligence' && (
+        {activeTab === 'market-intelligence' && selectedBatch && (
           <div className="space-y-6 lg:space-y-8">
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100">
-              <div className="p-4 lg:p-6 border-b border-gray-100">
-                <h2 className="text-lg lg:text-xl font-bold text-gray-900">Geographic Risk Analysis</h2>
-                <p className="text-sm text-gray-600 mt-1">AI-powered market intelligence for pincode-based risk assessment</p>
-              </div>
-              <div className="p-4 lg:p-6">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                  <div className="space-y-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Enter Pincode</label>
-                      <input
-                        type="text"
-                        placeholder="e.g., 400001"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      />
-                    </div>
-                    <button className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-                      <MapPin size={16} />
-                      Analyze Location
+            {/* Batch Header */}
+            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 lg:p-6">
+              <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                <div>
+                  <h2 className="text-xl font-bold text-gray-900">Step 2: Market Intelligence</h2>
+                  <p className="text-gray-600">Batch: {selectedBatch.name} ({selectedBatch.id})</p>
+                </div>
+                
+                <div className="flex items-center gap-3">
+                  {currentStep === 2 && !selectedBatch.results.marketIntel && (
+                    <button
+                      onClick={processStep}
+                      disabled={isProcessing}
+                      className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors"
+                    >
+                      {isProcessing ? (
+                        <>
+                          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                          Analyzing...
+                        </>
+                      ) : (
+                        <>
+                          <PlayCircle size={16} />
+                          Start Analysis
+                        </>
+                      )}
                     </button>
+                  )}
+                  
+                  {selectedBatch.results.marketIntel && (
+                    <div className="flex items-center gap-2 text-green-600">
+                      <CheckCircle size={20} />
+                      <span className="font-semibold">Completed</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Step Progress */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+              <StepIndicator
+                stepNumber={1}
+                title="Fraud Detection"
+                isActive={false}
+                isCompleted={selectedBatch.results.fraudDetection !== null}
+                isDisabled={false}
+              />
+              <StepIndicator
+                stepNumber={2}
+                title="Market Intelligence"
+                isActive={currentStep === 2}
+                isCompleted={selectedBatch.results.marketIntel !== null}
+                isDisabled={selectedBatch.results.fraudDetection === null}
+              />
+              <StepIndicator
+                stepNumber={3}
+                title="Customer Search"
+                isActive={false}
+                isCompleted={selectedBatch.results.customerSearch !== null}
+                isDisabled={selectedBatch.results.marketIntel === null}
+              />
+            </div>
+
+            {/* Results */}
+            {selectedBatch.results.marketIntel && (
+              <div className="space-y-6">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div className="bg-white rounded-lg p-4 border border-gray-200">
+                    <p className="text-sm text-gray-600">Records Analyzed</p>
+                    <p className="text-2xl font-bold text-gray-900">{selectedBatch.results.marketIntel.analyzed.toLocaleString()}</p>
+                  </div>
+                  <div className="bg-white rounded-lg p-4 border border-gray-200">
+                    <p className="text-sm text-gray-600">High Risk Areas</p>
+                    <p className="text-2xl font-bold text-orange-600">{selectedBatch.results.marketIntel.highRiskAreas}</p>
+                  </div>
+                  <div className="bg-white rounded-lg p-4 border border-gray-200">
+                    <p className="text-sm text-gray-600">Avg Risk Score</p>
+                    <p className="text-2xl font-bold text-purple-600">{selectedBatch.results.marketIntel.avgRiskScore}%</p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+                  <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 lg:p-6">
+                    <h3 className="text-lg font-bold text-gray-900 mb-4">Geographic Risk Analysis</h3>
+                    <GeographicRiskChart />
                   </div>
                   
-                  <div className="bg-gray-50 rounded-lg p-4">
-                    <h4 className="font-semibold text-gray-900 mb-3">Sample Analysis: 400001</h4>
-                    <div className="space-y-2 text-sm">
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Risk Level:</span>
-                        <span className="font-medium text-orange-600">HIGH</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Fraud Rate:</span>
-                        <span className="font-medium">8.3%</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Sample Size:</span>
-                        <span className="font-medium">1,247 cases</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Confidence:</span>
-                        <span className="font-medium text-green-600">96.2%</span>
-                      </div>
-                    </div>
+                  <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 lg:p-6">
+                    <h3 className="text-lg font-bold text-gray-900 mb-4">Regional Heatmap</h3>
+                    <GeographicHeatmapChart />
                   </div>
                 </div>
               </div>
-            </div>
-
-            {/* Geographic Visualization */}
-            <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-              <div className="bg-white rounded-xl shadow-sm border border-gray-100">
-                <div className="p-4 lg:p-6 border-b border-gray-100">
-                  <h3 className="text-lg font-bold text-gray-900">Risk vs Cases Analysis</h3>
-                  <p className="text-sm text-gray-600 mt-1">Correlation between case volume and fraud rates</p>
-                </div>
-                <div className="p-4 lg:p-6">
-                  <GeographicRiskChart />
-                </div>
-              </div>
-
-              <div className="bg-white rounded-xl shadow-sm border border-gray-100">
-                <div className="p-4 lg:p-6 border-b border-gray-100">
-                  <h3 className="text-lg font-bold text-gray-900">Regional Risk Heatmap</h3>
-                  <p className="text-sm text-gray-600 mt-1">Risk distribution across geographic regions</p>
-                </div>
-                <div className="p-4 lg:p-6">
-                  <GeographicHeatmapChart />
-                </div>
-              </div>
-            </div>
-
-            {/* High Risk Areas */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100">
-              <div className="p-4 lg:p-6 border-b border-gray-100">
-                <h3 className="text-lg font-bold text-gray-900">High Risk Areas</h3>
-              </div>
-              <div className="p-4 lg:p-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-                  {[
-                    { pincode: '400001', city: 'Mumbai', risk: 8.3, cases: 1247 },
-                    { pincode: '110001', city: 'Delhi', risk: 7.8, cases: 892 },
-                    { pincode: '560001', city: 'Bangalore', risk: 6.9, cases: 1034 },
-                    { pincode: '600001', city: 'Chennai', risk: 6.2, cases: 756 },
-                    { pincode: '700001', city: 'Kolkata', risk: 5.8, cases: 623 },
-                    { pincode: '500001', city: 'Hyderabad', risk: 5.4, cases: 445 }
-                  ].map((area, index) => (
-                    <div key={index} className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
-                      <div className="flex items-center justify-between mb-2">
-                        <h4 className="font-semibold text-gray-900">{area.pincode}</h4>
-                        <span className="text-xs bg-red-100 text-red-700 px-2 py-1 rounded-full">HIGH RISK</span>
-                      </div>
-                      <p className="text-sm text-gray-600 mb-3">{area.city}</p>
-                      <div className="space-y-1 text-xs">
-                        <div className="flex justify-between">
-                          <span className="text-gray-500">Fraud Rate:</span>
-                          <span className="font-medium text-red-600">{area.risk}%</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-500">Cases:</span>
-                          <span className="font-medium">{area.cases.toLocaleString()}</span>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
+            )}
           </div>
         )}
 
-        {activeTab === 'customer-search' && (
+        {activeTab === 'customer-search' && selectedBatch && (
           <div className="space-y-6 lg:space-y-8">
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100">
-              <div className="p-4 lg:p-6 border-b border-gray-100">
-                <h2 className="text-lg lg:text-xl font-bold text-gray-900">Similar Customer Analysis</h2>
-                <p className="text-sm text-gray-600 mt-1">Find customers with similar risk profiles using advanced similarity algorithms</p>
+            {/* Batch Header */}
+            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 lg:p-6">
+              <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                <div>
+                  <h2 className="text-xl font-bold text-gray-900">Step 3: Customer Search</h2>
+                  <p className="text-gray-600">Batch: {selectedBatch.name} ({selectedBatch.id})</p>
+                </div>
+                
+                <div className="flex items-center gap-3">
+                  {currentStep === 3 && !selectedBatch.results.customerSearch && (
+                    <button
+                      onClick={processStep}
+                      disabled={isProcessing}
+                      className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors"
+                    >
+                      {isProcessing ? (
+                        <>
+                          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                          Searching...
+                        </>
+                      ) : (
+                        <>
+                          <PlayCircle size={16} />
+                          Start Search
+                        </>
+                      )}
+                    </button>
+                  )}
+                  
+                  {selectedBatch.results.customerSearch && (
+                    <div className="flex items-center gap-2 text-green-600">
+                      <CheckCircle size={20} />
+                      <span className="font-semibold">Completed</span>
+                    </div>
+                  )}
+                </div>
               </div>
-              <div className="p-4 lg:p-6">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                  <div className="space-y-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Customer ID</label>
-                      <input
-                        type="text"
-                        placeholder="e.g., CUST-12345"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Similarity Threshold</label>
-                      <select className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                        <option value="0.8">High (0.8+)</option>
-                        <option value="0.6">Medium (0.6+)</option>
-                        <option value="0.4">Low (0.4+)</option>
-                      </select>
-                    </div>
-                    <button className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-                      <Search size={16} />
-                      Find Similar Customers
+            </div>
+
+            {/* Step Progress */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+              <StepIndicator
+                stepNumber={1}
+                title="Fraud Detection"
+                isActive={false}
+                isCompleted={selectedBatch.results.fraudDetection !== null}
+                isDisabled={false}
+              />
+              <StepIndicator
+                stepNumber={2}
+                title="Market Intelligence"
+                isActive={false}
+                isCompleted={selectedBatch.results.marketIntel !== null}
+                isDisabled={selectedBatch.results.fraudDetection === null}
+              />
+              <StepIndicator
+                stepNumber={3}
+                title="Customer Search"
+                isActive={currentStep === 3}
+                isCompleted={selectedBatch.results.customerSearch !== null}
+                isDisabled={selectedBatch.results.marketIntel === null}
+              />
+            </div>
+
+            {/* Results */}
+            {selectedBatch.results.customerSearch && (
+              <div className="space-y-6">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div className="bg-white rounded-lg p-4 border border-gray-200">
+                    <p className="text-sm text-gray-600">Records Processed</p>
+                    <p className="text-2xl font-bold text-gray-900">{selectedBatch.results.customerSearch.processed.toLocaleString()}</p>
+                  </div>
+                  <div className="bg-white rounded-lg p-4 border border-gray-200">
+                    <p className="text-sm text-gray-600">Similarity Matches</p>
+                    <p className="text-2xl font-bold text-purple-600">{selectedBatch.results.customerSearch.similarityMatches}</p>
+                  </div>
+                  <div className="bg-white rounded-lg p-4 border border-gray-200">
+                    <p className="text-sm text-gray-600">Avg Similarity</p>
+                    <p className="text-2xl font-bold text-blue-600">{selectedBatch.results.customerSearch.avgSimilarity}</p>
+                  </div>
+                </div>
+
+                <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 lg:p-6">
+                  <h3 className="text-lg font-bold text-gray-900 mb-4">Similarity Analysis</h3>
+                  <SimilarityAnalysisChart />
+                </div>
+
+                {/* Final Actions */}
+                <div className="bg-green-50 border border-green-200 rounded-xl p-4 lg:p-6">
+                  <div className="flex items-center gap-3 mb-4">
+                    <CheckCircle className="w-6 h-6 text-green-600" />
+                    <h3 className="text-lg font-bold text-green-900">Batch Processing Complete</h3>
+                  </div>
+                  <p className="text-green-700 mb-4">All three analysis steps have been completed successfully. You can now download the comprehensive report or view detailed results.</p>
+                  
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <button className="flex items-center justify-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
+                      <Download size={16} />
+                      Download Full Report
+                    </button>
+                    <button className="flex items-center justify-center gap-2 px-4 py-2 border border-green-300 text-green-700 rounded-lg hover:bg-green-50 transition-colors">
+                      <Eye size={16} />
+                      View Detailed Results
+                    </button>
+                    <button 
+                      onClick={() => {
+                        setSelectedBatch(null);
+                        setActiveTab('batches');
+                        setCurrentStep(1);
+                      }}
+                      className="flex items-center justify-center gap-2 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                    >
+                      <RotateCcw size={16} />
+                      Back to Batches
                     </button>
                   </div>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {activeTab === 'market-intelligence' && selectedBatch && (
+          <div className="space-y-6 lg:space-y-8">
+            {/* Batch Header */}
+            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 lg:p-6">
+              <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                <div>
+                  <h2 className="text-xl font-bold text-gray-900">Step 2: Market Intelligence</h2>
+                  <p className="text-gray-600">Batch: {selectedBatch.name} ({selectedBatch.id})</p>
+                </div>
+                
+                <div className="flex items-center gap-3">
+                  {currentStep === 2 && !selectedBatch.results.marketIntel && (
+                    <button
+                      onClick={processStep}
+                      disabled={isProcessing}
+                      className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors"
+                    >
+                      {isProcessing ? (
+                        <>
+                          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                          Analyzing...
+                        </>
+                      ) : (
+                        <>
+                          <PlayCircle size={16} />
+                          Start Analysis
+                        </>
+                      )}
+                    </button>
+                  )}
                   
-                  <div className="bg-gray-50 rounded-lg p-4">
-                    <h4 className="font-semibold text-gray-900 mb-3">Sample Results: CUST-12345</h4>
-                    <div className="space-y-3">
-                      {[
-                        { id: 'CUST-67890', similarity: 0.94, risk: 'HIGH', status: 'Known Fraud' },
-                        { id: 'CUST-54321', similarity: 0.87, risk: 'MEDIUM', status: 'Under Review' },
-                        { id: 'CUST-98765', similarity: 0.82, risk: 'HIGH', status: 'Flagged' }
-                      ].map((customer, index) => (
-                        <div key={index} className="flex items-center justify-between p-3 bg-white rounded border">
-                          <div>
-                            <p className="font-medium text-gray-900">{customer.id}</p>
-                            <p className="text-xs text-gray-500">Similarity: {customer.similarity}</p>
-                          </div>
-                          <div className="text-right">
-                            <span className={`text-xs px-2 py-1 rounded-full ${
-                              customer.risk === 'HIGH' ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700'
-                            }`}>
-                              {customer.risk}
-                            </span>
-                            <p className="text-xs text-gray-500 mt-1">{customer.status}</p>
-                          </div>
-                        </div>
-                      ))}
+                  {selectedBatch.results.marketIntel && (
+                    <div className="flex items-center gap-2 text-green-600">
+                      <CheckCircle size={20} />
+                      <span className="font-semibold">Completed</span>
                     </div>
-                  </div>
+                  )}
                 </div>
               </div>
             </div>
 
-            {/* Customer Similarity Visualization */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100">
-              <div className="p-4 lg:p-6 border-b border-gray-100">
-                <h3 className="text-lg font-bold text-gray-900">Similarity Distribution Analysis</h3>
-                <p className="text-sm text-gray-600 mt-1">Customer similarity ranges and associated risk patterns</p>
-              </div>
-              <div className="p-4 lg:p-6">
-                <SimilarityAnalysisChart />
-              </div>
+            {/* Step Progress */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+              <StepIndicator
+                stepNumber={1}
+                title="Fraud Detection"
+                isActive={false}
+                isCompleted={selectedBatch.results.fraudDetection !== null}
+                isDisabled={false}
+              />
+              <StepIndicator
+                stepNumber={2}
+                title="Market Intelligence"
+                isActive={currentStep === 2}
+                isCompleted={selectedBatch.results.marketIntel !== null}
+                isDisabled={selectedBatch.results.fraudDetection === null}
+              />
+              <StepIndicator
+                stepNumber={3}
+                title="Customer Search"
+                isActive={false}
+                isCompleted={selectedBatch.results.customerSearch !== null}
+                isDisabled={selectedBatch.results.marketIntel === null}
+              />
             </div>
 
-            {/* Algorithm Details */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100">
-              <div className="p-4 lg:p-6 border-b border-gray-100">
-                <h3 className="text-lg font-bold text-gray-900">Algorithm Details</h3>
-              </div>
-              <div className="p-4 lg:p-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <h4 className="font-semibold text-gray-900 mb-3">Similarity Factors</h4>
-                    <div className="space-y-2 text-sm">
-                      {[
-                        'Financial Profile Matching',
-                        'Geographic Proximity',
-                        'Document Verification Patterns',
-                        'Digital Footprint Similarity',
-                        'Employment History Alignment'
-                      ].map((factor, index) => (
-                        <div key={index} className="flex items-center gap-2">
-                          <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                          <span className="text-gray-700">{factor}</span>
-                        </div>
-                      ))}
-                    </div>
+            {/* Results */}
+            {selectedBatch.results.marketIntel && (
+              <div className="space-y-6">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div className="bg-white rounded-lg p-4 border border-gray-200">
+                    <p className="text-sm text-gray-600">Records Analyzed</p>
+                    <p className="text-2xl font-bold text-gray-900">{selectedBatch.results.marketIntel.analyzed.toLocaleString()}</p>
                   </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900 mb-3">Performance Metrics</h4>
-                    <div className="space-y-2 text-sm">
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Precision:</span>
-                        <span className="font-medium">92.4%</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Recall:</span>
-                        <span className="font-medium">89.7%</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">F1-Score:</span>
-                        <span className="font-medium">91.0%</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Processing Speed:</span>
-                        <span className="font-medium">~500ms</span>
-                      </div>
-                    </div>
+                  <div className="bg-white rounded-lg p-4 border border-gray-200">
+                    <p className="text-sm text-gray-600">High Risk Areas</p>
+                    <p className="text-2xl font-bold text-orange-600">{selectedBatch.results.marketIntel.highRiskAreas}</p>
+                  </div>
+                  <div className="bg-white rounded-lg p-4 border border-gray-200">
+                    <p className="text-sm text-gray-600">Avg Risk Score</p>
+                    <p className="text-2xl font-bold text-purple-600">{selectedBatch.results.marketIntel.avgRiskScore}%</p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+                  <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 lg:p-6">
+                    <h3 className="text-lg font-bold text-gray-900 mb-4">Geographic Risk Analysis</h3>
+                    <GeographicRiskChart />
+                  </div>
+                  
+                  <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 lg:p-6">
+                    <h3 className="text-lg font-bold text-gray-900 mb-4">Regional Heatmap</h3>
+                    <GeographicHeatmapChart />
                   </div>
                 </div>
               </div>
+            )}
+          </div>
+        )}
+
+        {activeTab === 'customer-search' && selectedBatch && (
+          <div className="space-y-6 lg:space-y-8">
+            {/* Batch Header */}
+            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 lg:p-6">
+              <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                <div>
+                  <h2 className="text-xl font-bold text-gray-900">Step 3: Customer Search</h2>
+                  <p className="text-gray-600">Batch: {selectedBatch.name} ({selectedBatch.id})</p>
+                </div>
+                
+                <div className="flex items-center gap-3">
+                  {currentStep === 3 && !selectedBatch.results.customerSearch && (
+                    <button
+                      onClick={processStep}
+                      disabled={isProcessing}
+                      className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors"
+                    >
+                      {isProcessing ? (
+                        <>
+                          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                          Searching...
+                        </>
+                      ) : (
+                        <>
+                          <PlayCircle size={16} />
+                          Start Search
+                        </>
+                      )}
+                    </button>
+                  )}
+                  
+                  {selectedBatch.results.customerSearch && (
+                    <div className="flex items-center gap-2 text-green-600">
+                      <CheckCircle size={20} />
+                      <span className="font-semibold">Completed</span>
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
+
+            {/* Step Progress */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+              <StepIndicator
+                stepNumber={1}
+                title="Fraud Detection"
+                isActive={false}
+                isCompleted={selectedBatch.results.fraudDetection !== null}
+                isDisabled={false}
+              />
+              <StepIndicator
+                stepNumber={2}
+                title="Market Intelligence"
+                isActive={false}
+                isCompleted={selectedBatch.results.marketIntel !== null}
+                isDisabled={selectedBatch.results.fraudDetection === null}
+              />
+              <StepIndicator
+                stepNumber={3}
+                title="Customer Search"
+                isActive={currentStep === 3}
+                isCompleted={selectedBatch.results.customerSearch !== null}
+                isDisabled={selectedBatch.results.marketIntel === null}
+              />
+            </div>
+
+            {/* Results */}
+            {selectedBatch.results.customerSearch && (
+              <div className="space-y-6">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div className="bg-white rounded-lg p-4 border border-gray-200">
+                    <p className="text-sm text-gray-600">Records Processed</p>
+                    <p className="text-2xl font-bold text-gray-900">{selectedBatch.results.customerSearch.processed.toLocaleString()}</p>
+                  </div>
+                  <div className="bg-white rounded-lg p-4 border border-gray-200">
+                    <p className="text-sm text-gray-600">Similarity Matches</p>
+                    <p className="text-2xl font-bold text-purple-600">{selectedBatch.results.customerSearch.similarityMatches}</p>
+                  </div>
+                  <div className="bg-white rounded-lg p-4 border border-gray-200">
+                    <p className="text-sm text-gray-600">Avg Similarity</p>
+                    <p className="text-2xl font-bold text-blue-600">{selectedBatch.results.customerSearch.avgSimilarity}</p>
+                  </div>
+                </div>
+
+                <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 lg:p-6">
+                  <h3 className="text-lg font-bold text-gray-900 mb-4">Similarity Distribution</h3>
+                  <SimilarityAnalysisChart />
+                </div>
+
+                {/* Final Actions */}
+                <div className="bg-green-50 border border-green-200 rounded-xl p-4 lg:p-6">
+                  <div className="flex items-center gap-3 mb-4">
+                    <CheckCircle className="w-6 h-6 text-green-600" />
+                    <h3 className="text-lg font-bold text-green-900">Batch Processing Complete</h3>
+                  </div>
+                  <p className="text-green-700 mb-4">All three analysis steps have been completed successfully. You can now download the comprehensive report or view detailed results.</p>
+                  
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <button className="flex items-center justify-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
+                      <Download size={16} />
+                      Download Full Report
+                    </button>
+                    <button className="flex items-center justify-center gap-2 px-4 py-2 border border-green-300 text-green-700 rounded-lg hover:bg-green-50 transition-colors">
+                      <Eye size={16} />
+                      View Detailed Results
+                    </button>
+                    <button 
+                      onClick={() => {
+                        setSelectedBatch(null);
+                        setActiveTab('batches');
+                        setCurrentStep(1);
+                      }}
+                      className="flex items-center justify-center gap-2 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                    >
+                      <RotateCcw size={16} />
+                      Back to Batches
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         )}
       </main>
