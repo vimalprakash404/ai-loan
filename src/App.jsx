@@ -2,8 +2,38 @@ import React, { useState } from 'react';
 import { Upload, Play, Shield, MapPin, Users, AlertTriangle, CheckCircle, Eye, EyeOff, Download, RotateCcw, Brain, TrendingUp, Search } from 'lucide-react';
 
 const App = () => {
-  const [currentStep, setCurrentStep] = useState('login');
+  const [currentStep, setCurrentStep] = useState('batch-list');
   const [user, setUser] = useState(null);
+  const [batches, setBatches] = useState([
+    {
+      id: 1,
+      name: 'Batch 001 - Mumbai Applications',
+      uploadDate: '2025-01-15',
+      recordCount: 150,
+      status: 'completed',
+      fraudDetected: 23,
+      highRisk: 45
+    },
+    {
+      id: 2,
+      name: 'Batch 002 - Delhi Applications',
+      uploadDate: '2025-01-14',
+      recordCount: 89,
+      status: 'completed',
+      fraudDetected: 12,
+      highRisk: 28
+    },
+    {
+      id: 3,
+      name: 'Batch 003 - Bangalore Applications',
+      uploadDate: '2025-01-13',
+      recordCount: 203,
+      status: 'processing',
+      fraudDetected: 0,
+      highRisk: 0
+    }
+  ]);
+  const [selectedBatch, setSelectedBatch] = useState(null);
   const [uploadedData, setUploadedData] = useState([]);
   const [errors, setErrors] = useState([]);
   const [fraudDetectionResults, setFraudDetectionResults] = useState([]);
@@ -12,17 +42,6 @@ const App = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [currentBatch, setCurrentBatch] = useState(1);
   const [totalBatches, setTotalBatches] = useState(1);
-
-  // Mock login function
-  const handleLogin = () => {
-    const email = document.getElementById('login-email')?.value;
-    const password = document.getElementById('login-password')?.value;
-    
-    if (email && password) {
-      setUser({ email, name: email.split('@')[0] });
-      setCurrentStep('upload');
-    }
-  };
 
   // Parse CSV data with fraud detection fields
   const processUploadedFile = (file) => {
@@ -249,7 +268,7 @@ const App = () => {
 
   const logout = () => {
     setUser(null);
-    setCurrentStep('login');
+    setCurrentStep('batch-list');
     resetAllData();
   };
 
@@ -264,6 +283,18 @@ const App = () => {
   const startNewBatch = () => {
     setCurrentStep('upload');
     resetAllData();
+  };
+
+  const viewBatchDetails = (batch) => {
+    setSelectedBatch(batch);
+    // Load mock data for the selected batch
+    processUploadedFile(null); // This will load the mock data
+    setCurrentStep('display-data');
+  };
+
+  const createNewBatch = () => {
+    setSelectedBatch(null);
+    setCurrentStep('upload');
   };
 
   const exportToCSV = (data, filename) => {
@@ -289,59 +320,144 @@ const App = () => {
     document.body.removeChild(link);
   };
 
-  // Login Component
-  if (currentStep === 'login') {
+  // Batch List Component
+  if (currentStep === 'batch-list') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-red-50 to-orange-100 flex items-center justify-center p-4">
-        <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md">
-          <div className="text-center mb-8">
-            <div className="mx-auto w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
-              <Shield className="w-8 h-8 text-red-600" />
-            </div>
-            <h1 className="text-2xl font-bold text-gray-900">Fraud Detection System</h1>
-            <p className="text-gray-600">ML-powered fraud analysis platform</p>
-          </div>
-          
-          <div className="space-y-6">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Email Address
-              </label>
-              <input
-                type="email"
-                id="login-email"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
-                placeholder="Enter your email"
-              />
-            </div>
-            
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Password
-              </label>
-              <div className="relative">
-                <input
-                  type={showPassword ? "text" : "password"}
-                  id="login-password"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 pr-10"
-                  placeholder="Enter your password"
-                />
-                <button
-                  type="button"
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-                </button>
+      <div className="min-h-screen bg-gray-50">
+        {/* Header */}
+        <header className="bg-white shadow-sm border-b">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between items-center py-6">
+              <div className="flex items-center space-x-4">
+                <Shield className="w-8 h-8 text-red-600" />
+                <h1 className="text-2xl font-bold text-gray-900">Fraud Detection System</h1>
+              </div>
+              <div className="flex items-center space-x-4">
+                <span className="text-gray-700">ML-Powered Risk Analysis</span>
               </div>
             </div>
+          </div>
+        </header>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          {/* Upload New Batch Section */}
+          <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
+            <div className="text-center">
+              <div className="mx-auto w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
+                <Upload className="w-8 h-8 text-red-600" />
+              </div>
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">Upload New Batch</h2>
+              <p className="text-gray-600 mb-6">
+                Process customer data through our 3-step ML fraud detection pipeline
+              </p>
+              
+              <button
+                onClick={createNewBatch}
+                className="bg-red-600 text-white px-8 py-4 rounded-lg hover:bg-red-700 font-medium inline-flex items-center text-lg transition-colors"
+              >
+                <Upload className="w-6 h-6 mr-3" />
+                Upload CSV File
+              </button>
+              
+              <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                <div className="bg-blue-50 rounded-lg p-4">
+                  <Brain className="w-6 h-6 text-blue-600 mx-auto mb-2" />
+                  <h3 className="font-medium text-blue-900">Step 1: Fraud Detection</h3>
+                  <p className="text-blue-700">Random Forest ML model</p>
+                </div>
+                <div className="bg-purple-50 rounded-lg p-4">
+                  <MapPin className="w-6 h-6 text-purple-600 mx-auto mb-2" />
+                  <h3 className="font-medium text-purple-900">Step 2: Market Intelligence</h3>
+                  <p className="text-purple-700">Geographic risk analysis</p>
+                </div>
+                <div className="bg-green-50 rounded-lg p-4">
+                  <Search className="w-6 h-6 text-green-600 mx-auto mb-2" />
+                  <h3 className="font-medium text-green-900">Step 3: Similar Customers</h3>
+                  <p className="text-green-700">Cosine similarity matching</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Batch History */}
+          <div className="bg-white rounded-lg shadow">
+            <div className="px-6 py-4 border-b border-gray-200">
+              <h2 className="text-xl font-semibold text-gray-900">Previous Batches</h2>
+              <p className="text-gray-600">View and analyze previously processed batches</p>
+            </div>
             
-            <button
-              onClick={handleLogin}
-              className="w-full bg-red-600 text-white py-3 px-4 rounded-lg hover:bg-red-700 font-medium transition-colors"
-            >
-              Sign In
-            </button>
+            <div className="divide-y divide-gray-200">
+              {batches.map((batch) => (
+                <div key={batch.id} className="px-6 py-6 hover:bg-gray-50 transition-colors">
+                  <div className="flex items-center justify-between">
+                    <div className="flex-1">
+                      <div className="flex items-center space-x-4">
+                        <div className={`w-3 h-3 rounded-full ${
+                          batch.status === 'completed' ? 'bg-green-500' : 
+                          batch.status === 'processing' ? 'bg-yellow-500' : 'bg-gray-400'
+                        }`}></div>
+                        <div>
+                          <h3 className="text-lg font-medium text-gray-900">{batch.name}</h3>
+                          <p className="text-sm text-gray-500">
+                            Uploaded on {new Date(batch.uploadDate).toLocaleDateString()} • {batch.recordCount} records
+                          </p>
+                        </div>
+                      </div>
+                      
+                      <div className="mt-3 flex items-center space-x-6">
+                        <div className="flex items-center space-x-2">
+                          <AlertTriangle className="w-4 h-4 text-red-500" />
+                          <span className="text-sm text-gray-600">
+                            <span className="font-medium text-red-600">{batch.fraudDetected}</span> fraud detected
+                          </span>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <Shield className="w-4 h-4 text-orange-500" />
+                          <span className="text-sm text-gray-600">
+                            <span className="font-medium text-orange-600">{batch.highRisk}</span> high risk
+                          </span>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                            batch.status === 'completed' ? 'bg-green-100 text-green-800' : 
+                            batch.status === 'processing' ? 'bg-yellow-100 text-yellow-800' : 'bg-gray-100 text-gray-800'
+                          }`}>
+                            {batch.status === 'completed' ? 'Completed' : 
+                             batch.status === 'processing' ? 'Processing' : 'Pending'}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center space-x-3">
+                      {batch.status === 'completed' && (
+                        <button
+                          onClick={() => viewBatchDetails(batch)}
+                          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 font-medium inline-flex items-center text-sm transition-colors"
+                        >
+                          <Eye className="w-4 h-4 mr-2" />
+                          View Details
+                        </button>
+                      )}
+                      {batch.status === 'processing' && (
+                        <div className="flex items-center space-x-2 text-yellow-600">
+                          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-yellow-600"></div>
+                          <span className="text-sm font-medium">Processing...</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            
+            {batches.length === 0 && (
+              <div className="px-6 py-12 text-center">
+                <Upload className="mx-auto w-12 h-12 text-gray-400 mb-4" />
+                <h3 className="text-lg font-medium text-gray-900 mb-2">No batches yet</h3>
+                <p className="text-gray-500">Upload your first CSV file to get started with fraud detection</p>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -364,8 +480,19 @@ const App = () => {
               )}
             </div>
             <div className="flex items-center space-x-4">
-              <span className="text-gray-700">Welcome, {user?.name}</span>
+              {selectedBatch && (
+                <span className="text-gray-700">Analyzing: {selectedBatch.name}</span>
+              )}
               {currentStep !== 'upload' && (
+                <button
+                  onClick={() => setCurrentStep('batch-list')}
+                  className="text-blue-600 hover:text-blue-800 font-medium inline-flex items-center"
+                >
+                  <Eye className="w-4 h-4 mr-1" />
+                  View Batches
+                </button>
+              )}
+              {currentStep !== 'upload' && currentStep !== 'batch-list' && (
                 <button
                   onClick={startNewBatch}
                   className="text-green-600 hover:text-green-800 font-medium inline-flex items-center"
@@ -374,12 +501,6 @@ const App = () => {
                   New Batch
                 </button>
               )}
-              <button
-                onClick={logout}
-                className="text-red-600 hover:text-red-800 font-medium"
-              >
-                Logout
-              </button>
             </div>
           </div>
         </div>
@@ -387,7 +508,7 @@ const App = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Progress Steps */}
-        <div className="mb-8">
+        {currentStep !== 'batch-list' && <div className="mb-8">
           <div className="flex items-center space-x-4 overflow-x-auto pb-2">
             {['upload', 'display-data', 'fraud-detection', 'market-intelligence', 'similar-customer', 'final-results'].map((step, index) => {
               const stepNames = ['Upload CSV', 'Validate Data', 'Fraud Detection', 'Market Intelligence', 'Similar Customers', 'Final Results'];
@@ -412,7 +533,7 @@ const App = () => {
               );
             })}
           </div>
-        </div>
+        </div>}
 
         {/* Upload Step */}
         {currentStep === 'upload' && (
@@ -420,7 +541,10 @@ const App = () => {
             <div className="text-center">
               <Upload className="mx-auto w-16 h-16 text-red-600 mb-4" />
               <h2 className="text-2xl font-bold text-gray-900 mb-2">Upload Customer Data</h2>
-              <p className="text-gray-600 mb-6">
+              <p className="text-gray-600 mb-2">
+                Creating Batch {batches.length + 1}
+              </p>
+              <p className="text-gray-500 mb-6">
                 Upload CSV file with customer fraud detection features
               </p>
               
@@ -438,7 +562,7 @@ const App = () => {
                 >
                   <Upload className="w-12 h-12 text-gray-400 mb-4" />
                   <span className="text-lg font-medium text-gray-900">Click to upload CSV</span>
-                  <span className="text-gray-500">Required columns: customer_id, city, pincode, fraud features...</span>
+                  <span className="text-gray-500">Supports CSV files with 26 fraud detection features</span>
                 </label>
               </div>
 
@@ -456,6 +580,15 @@ const App = () => {
                   <div>• is_fraud (0/1)</div>
                   <div>• ... and 17 more features</div>
                 </div>
+              </div>
+              
+              <div className="mt-6">
+                <button
+                  onClick={() => setCurrentStep('batch-list')}
+                  className="text-gray-600 hover:text-gray-800 font-medium inline-flex items-center"
+                >
+                  ← Back to Batches
+                </button>
               </div>
             </div>
           </div>
@@ -481,7 +614,12 @@ const App = () => {
             <div className="bg-white rounded-lg shadow">
               <div className="px-6 py-4 border-b border-gray-200">
                 <div className="flex items-center justify-between">
-                  <h2 className="text-xl font-semibold text-gray-900">Customer Data Validation</h2>
+                  <div>
+                    <h2 className="text-xl font-semibold text-gray-900">Customer Data Validation</h2>
+                    {selectedBatch && (
+                      <p className="text-sm text-gray-500">{selectedBatch.name}</p>
+                    )}
+                  </div>
                   <span className="text-sm text-gray-500">{uploadedData.length} valid records</span>
                 </div>
               </div>
@@ -927,7 +1065,7 @@ const App = () => {
               
               <div className="px-6 py-4 bg-gray-50 flex justify-between items-center">
                 <div className="text-sm text-gray-600">
-                  Analysis complete for batch {currentBatch}
+                  Analysis complete for {selectedBatch?.name || `batch ${currentBatch}`}
                 </div>
                 <button
                   onClick={() => {
