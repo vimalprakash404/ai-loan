@@ -187,8 +187,7 @@ const App = () => {
 
   const BatchCard = ({ batch, onSelect }) => (
     <div 
-      className="bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all duration-200 cursor-pointer"
-      onClick={() => onSelect(batch)}
+      className="bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all duration-200"
     >
       <div className="p-4 lg:p-6">
         <div className="flex items-start justify-between mb-3">
@@ -257,6 +256,21 @@ const App = () => {
             </div>
           </div>
         )}
+
+        {/* View Button */}
+        <div className="mt-4 pt-4 border-t border-gray-100">
+          <button
+            onClick={() => {
+              onSelect(batch);
+              setActiveTab('fraud-detection');
+              setCurrentStep(batch.currentStep);
+            }}
+            className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            <Eye size={16} />
+            View Batch
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -297,43 +311,46 @@ const App = () => {
       </header>
 
       {/* Navigation */}
-      <nav className="bg-white border-b border-gray-200 sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex gap-1 py-3 overflow-x-auto">
-            <TabButton
-              id="batches"
-              label="Batches"
-              icon={FileText}
-              isActive={activeTab === 'batches'}
-              onClick={setActiveTab}
-            />
-            <TabButton
-              id="fraud-detection"
-              label="Step 1: Fraud Detection"
-              icon={Shield}
-              isActive={activeTab === 'fraud-detection'}
-              onClick={setActiveTab}
-              disabled={!selectedBatch}
-            />
-            <TabButton
-              id="market-intelligence"
-              label="Step 2: Market Intel"
-              icon={MapPin}
-              isActive={activeTab === 'market-intelligence'}
-              onClick={setActiveTab}
-              disabled={!selectedBatch}
-            />
-            <TabButton
-              id="customer-search"
-              label="Step 3: Customer Search"
-              icon={Search}
-              isActive={activeTab === 'customer-search'}
-              onClick={setActiveTab}
-              disabled={!selectedBatch}
-            />
+      {selectedBatch && (
+        <nav className="bg-white border-b border-gray-200 sticky top-0 z-10">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex gap-1 py-3 overflow-x-auto">
+              <TabButton
+                id="batches"
+                label="← Back to Batches"
+                icon={FileText}
+                isActive={activeTab === 'batches'}
+                onClick={() => {
+                  setActiveTab('batches');
+                  setSelectedBatch(null);
+                  setCurrentStep(1);
+                }}
+              />
+              <TabButton
+                id="fraud-detection"
+                label="Step 1: Fraud Detection"
+                icon={Shield}
+                isActive={activeTab === 'fraud-detection'}
+                onClick={setActiveTab}
+              />
+              <TabButton
+                id="market-intelligence"
+                label="Step 2: Market Intel"
+                icon={MapPin}
+                isActive={activeTab === 'market-intelligence'}
+                onClick={setActiveTab}
+              />
+              <TabButton
+                id="customer-search"
+                label="Step 3: Customer Search"
+                icon={Search}
+                isActive={activeTab === 'customer-search'}
+                onClick={setActiveTab}
+              />
+            </div>
           </div>
-        </div>
-      </nav>
+        </nav>
+      )}
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-8">
@@ -673,353 +690,4 @@ const App = () => {
         {activeTab === 'customer-search' && selectedBatch && (
           <div className="space-y-6 lg:space-y-8">
             {/* Batch Header */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 lg:p-6">
-              <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-                <div>
-                  <h2 className="text-xl font-bold text-gray-900">Step 3: Customer Search</h2>
-                  <p className="text-gray-600">Batch: {selectedBatch.name} ({selectedBatch.id})</p>
-                </div>
-                
-                <div className="flex items-center gap-3">
-                  {currentStep === 3 && !selectedBatch.results.customerSearch && (
-                    <button
-                      onClick={processStep}
-                      disabled={isProcessing}
-                      className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors"
-                    >
-                      {isProcessing ? (
-                        <>
-                          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                          Searching...
-                        </>
-                      ) : (
-                        <>
-                          <PlayCircle size={16} />
-                          Start Search
-                        </>
-                      )}
-                    </button>
-                  )}
-                  
-                  {selectedBatch.results.customerSearch && (
-                    <div className="flex items-center gap-2 text-green-600">
-                      <CheckCircle size={20} />
-                      <span className="font-semibold">Completed</span>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-
-            {/* Step Progress */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-              <StepIndicator
-                stepNumber={1}
-                title="Fraud Detection"
-                isActive={false}
-                isCompleted={selectedBatch.results.fraudDetection !== null}
-                isDisabled={false}
-              />
-              <StepIndicator
-                stepNumber={2}
-                title="Market Intelligence"
-                isActive={false}
-                isCompleted={selectedBatch.results.marketIntel !== null}
-                isDisabled={selectedBatch.results.fraudDetection === null}
-              />
-              <StepIndicator
-                stepNumber={3}
-                title="Customer Search"
-                isActive={currentStep === 3}
-                isCompleted={selectedBatch.results.customerSearch !== null}
-                isDisabled={selectedBatch.results.marketIntel === null}
-              />
-            </div>
-
-            {/* Results */}
-            {selectedBatch.results.customerSearch && (
-              <div className="space-y-6">
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  <div className="bg-white rounded-lg p-4 border border-gray-200">
-                    <p className="text-sm text-gray-600">Records Processed</p>
-                    <p className="text-2xl font-bold text-gray-900">{selectedBatch.results.customerSearch.processed.toLocaleString()}</p>
-                  </div>
-                  <div className="bg-white rounded-lg p-4 border border-gray-200">
-                    <p className="text-sm text-gray-600">Similarity Matches</p>
-                    <p className="text-2xl font-bold text-purple-600">{selectedBatch.results.customerSearch.similarityMatches}</p>
-                  </div>
-                  <div className="bg-white rounded-lg p-4 border border-gray-200">
-                    <p className="text-sm text-gray-600">Avg Similarity</p>
-                    <p className="text-2xl font-bold text-blue-600">{selectedBatch.results.customerSearch.avgSimilarity}</p>
-                  </div>
-                </div>
-
-                <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 lg:p-6">
-                  <h3 className="text-lg font-bold text-gray-900 mb-4">Similarity Analysis</h3>
-                  <SimilarityAnalysisChart />
-                </div>
-
-                {/* Final Actions */}
-                <div className="bg-green-50 border border-green-200 rounded-xl p-4 lg:p-6">
-                  <div className="flex items-center gap-3 mb-4">
-                    <CheckCircle className="w-6 h-6 text-green-600" />
-                    <h3 className="text-lg font-bold text-green-900">Batch Processing Complete</h3>
-                  </div>
-                  <p className="text-green-700 mb-4">All three analysis steps have been completed successfully. You can now download the comprehensive report or view detailed results.</p>
-                  
-                  <div className="flex flex-col sm:flex-row gap-3">
-                    <button className="flex items-center justify-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
-                      <Download size={16} />
-                      Download Full Report
-                    </button>
-                    <button className="flex items-center justify-center gap-2 px-4 py-2 border border-green-300 text-green-700 rounded-lg hover:bg-green-50 transition-colors">
-                      <Eye size={16} />
-                      View Detailed Results
-                    </button>
-                    <button 
-                      onClick={() => {
-                        setSelectedBatch(null);
-                        setActiveTab('batches');
-                        setCurrentStep(1);
-                      }}
-                      className="flex items-center justify-center gap-2 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
-                    >
-                      <RotateCcw size={16} />
-                      Back to Batches
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        )}
-
-        {activeTab === 'market-intelligence' && selectedBatch && (
-          <div className="space-y-6 lg:space-y-8">
-            {/* Batch Header */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 lg:p-6">
-              <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-                <div>
-                  <h2 className="text-xl font-bold text-gray-900">Step 2: Market Intelligence</h2>
-                  <p className="text-gray-600">Batch: {selectedBatch.name} ({selectedBatch.id})</p>
-                </div>
-                
-                <div className="flex items-center gap-3">
-                  {currentStep === 2 && !selectedBatch.results.marketIntel && (
-                    <button
-                      onClick={processStep}
-                      disabled={isProcessing}
-                      className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors"
-                    >
-                      {isProcessing ? (
-                        <>
-                          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                          Analyzing...
-                        </>
-                      ) : (
-                        <>
-                          <PlayCircle size={16} />
-                          Start Analysis
-                        </>
-                      )}
-                    </button>
-                  )}
-                  
-                  {selectedBatch.results.marketIntel && (
-                    <div className="flex items-center gap-2 text-green-600">
-                      <CheckCircle size={20} />
-                      <span className="font-semibold">Completed</span>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-
-            {/* Step Progress */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-              <StepIndicator
-                stepNumber={1}
-                title="Fraud Detection"
-                isActive={false}
-                isCompleted={selectedBatch.results.fraudDetection !== null}
-                isDisabled={false}
-              />
-              <StepIndicator
-                stepNumber={2}
-                title="Market Intelligence"
-                isActive={currentStep === 2}
-                isCompleted={selectedBatch.results.marketIntel !== null}
-                isDisabled={selectedBatch.results.fraudDetection === null}
-              />
-              <StepIndicator
-                stepNumber={3}
-                title="Customer Search"
-                isActive={false}
-                isCompleted={selectedBatch.results.customerSearch !== null}
-                isDisabled={selectedBatch.results.marketIntel === null}
-              />
-            </div>
-
-            {/* Results */}
-            {selectedBatch.results.marketIntel && (
-              <div className="space-y-6">
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  <div className="bg-white rounded-lg p-4 border border-gray-200">
-                    <p className="text-sm text-gray-600">Records Analyzed</p>
-                    <p className="text-2xl font-bold text-gray-900">{selectedBatch.results.marketIntel.analyzed.toLocaleString()}</p>
-                  </div>
-                  <div className="bg-white rounded-lg p-4 border border-gray-200">
-                    <p className="text-sm text-gray-600">High Risk Areas</p>
-                    <p className="text-2xl font-bold text-orange-600">{selectedBatch.results.marketIntel.highRiskAreas}</p>
-                  </div>
-                  <div className="bg-white rounded-lg p-4 border border-gray-200">
-                    <p className="text-sm text-gray-600">Avg Risk Score</p>
-                    <p className="text-2xl font-bold text-purple-600">{selectedBatch.results.marketIntel.avgRiskScore}%</p>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-                  <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 lg:p-6">
-                    <h3 className="text-lg font-bold text-gray-900 mb-4">Geographic Risk Analysis</h3>
-                    <GeographicRiskChart />
-                  </div>
-                  
-                  <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 lg:p-6">
-                    <h3 className="text-lg font-bold text-gray-900 mb-4">Regional Heatmap</h3>
-                    <GeographicHeatmapChart />
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        )}
-
-        {activeTab === 'customer-search' && selectedBatch && (
-          <div className="space-y-6 lg:space-y-8">
-            {/* Batch Header */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 lg:p-6">
-              <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-                <div>
-                  <h2 className="text-xl font-bold text-gray-900">Step 3: Customer Search</h2>
-                  <p className="text-gray-600">Batch: {selectedBatch.name} ({selectedBatch.id})</p>
-                </div>
-                
-                <div className="flex items-center gap-3">
-                  {currentStep === 3 && !selectedBatch.results.customerSearch && (
-                    <button
-                      onClick={processStep}
-                      disabled={isProcessing}
-                      className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors"
-                    >
-                      {isProcessing ? (
-                        <>
-                          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                          Searching...
-                        </>
-                      ) : (
-                        <>
-                          <PlayCircle size={16} />
-                          Start Search
-                        </>
-                      )}
-                    </button>
-                  )}
-                  
-                  {selectedBatch.results.customerSearch && (
-                    <div className="flex items-center gap-2 text-green-600">
-                      <CheckCircle size={20} />
-                      <span className="font-semibold">Completed</span>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-
-            {/* Step Progress */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-              <StepIndicator
-                stepNumber={1}
-                title="Fraud Detection"
-                isActive={false}
-                isCompleted={selectedBatch.results.fraudDetection !== null}
-                isDisabled={false}
-              />
-              <StepIndicator
-                stepNumber={2}
-                title="Market Intelligence"
-                isActive={false}
-                isCompleted={selectedBatch.results.marketIntel !== null}
-                isDisabled={selectedBatch.results.fraudDetection === null}
-              />
-              <StepIndicator
-                stepNumber={3}
-                title="Customer Search"
-                isActive={currentStep === 3}
-                isCompleted={selectedBatch.results.customerSearch !== null}
-                isDisabled={selectedBatch.results.marketIntel === null}
-              />
-            </div>
-
-            {/* Results */}
-            {selectedBatch.results.customerSearch && (
-              <div className="space-y-6">
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  <div className="bg-white rounded-lg p-4 border border-gray-200">
-                    <p className="text-sm text-gray-600">Records Processed</p>
-                    <p className="text-2xl font-bold text-gray-900">{selectedBatch.results.customerSearch.processed.toLocaleString()}</p>
-                  </div>
-                  <div className="bg-white rounded-lg p-4 border border-gray-200">
-                    <p className="text-sm text-gray-600">Similarity Matches</p>
-                    <p className="text-2xl font-bold text-purple-600">{selectedBatch.results.customerSearch.similarityMatches}</p>
-                  </div>
-                  <div className="bg-white rounded-lg p-4 border border-gray-200">
-                    <p className="text-sm text-gray-600">Avg Similarity</p>
-                    <p className="text-2xl font-bold text-blue-600">{selectedBatch.results.customerSearch.avgSimilarity}</p>
-                  </div>
-                </div>
-
-                <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 lg:p-6">
-                  <h3 className="text-lg font-bold text-gray-900 mb-4">Similarity Distribution</h3>
-                  <SimilarityAnalysisChart />
-                </div>
-
-                {/* Final Actions */}
-                <div className="bg-green-50 border border-green-200 rounded-xl p-4 lg:p-6">
-                  <div className="flex items-center gap-3 mb-4">
-                    <CheckCircle className="w-6 h-6 text-green-600" />
-                    <h3 className="text-lg font-bold text-green-900">Batch Processing Complete</h3>
-                  </div>
-                  <p className="text-green-700 mb-4">All three analysis steps have been completed successfully. You can now download the comprehensive report or view detailed results.</p>
-                  
-                  <div className="flex flex-col sm:flex-row gap-3">
-                    <button className="flex items-center justify-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
-                      <Download size={16} />
-                      Download Full Report
-                    </button>
-                    <button className="flex items-center justify-center gap-2 px-4 py-2 border border-green-300 text-green-700 rounded-lg hover:bg-green-50 transition-colors">
-                      <Eye size={16} />
-                      View Detailed Results
-                    </button>
-                    <button 
-                      onClick={() => {
-                        setSelectedBatch(null);
-                        setActiveTab('batches');
-                        setCurrentStep(1);
-                      }}
-                      className="flex items-center justify-center gap-2 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
-                    >
-                      <RotateCcw size={16} />
-                      Back to Batches
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        )}
-      </main>
-    </div>
-  );
-};
-
-export default App;
+            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 lg
