@@ -4,6 +4,10 @@ import { useAppContext } from '../context/AppContext';
 import { useBatch } from '../hooks/useBatch';
 import StepIndicator from '../components/ui/StepIndicator';
 import ProcessingButton from '../components/ui/ProcessingButton';
+import MarketInsights from '../components/ui/MarketInsights';
+import GeographicHeatmap from '../components/ui/GeographicHeatmap';
+import RiskFactorAnalysis from '../components/ui/RiskFactorAnalysis';
+import marketData from '../../marget.json';
 
 const MarketIntelligence = () => {
   const navigate = useNavigate();
@@ -87,6 +91,10 @@ const MarketIntelligence = () => {
             </div>
           </div>
 
+          {/* Market Intelligence Components */}
+          <MarketInsights marketData={marketData} />
+          <GeographicHeatmap marketData={marketData} />
+          <RiskFactorAnalysis marketData={marketData} />
         </div>
       )}
     </div>
