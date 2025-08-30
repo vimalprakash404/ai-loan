@@ -91,7 +91,7 @@ const MarketIntelligence = () => {
           </div>
 
           {/* Market Intelligence Analysis */}
-          <MarketIntelligenceAnalysis marketData={marketData} />
+          <MarketIntelligenceAnalysis marketData={marketDataImport} />
         </div>
       )}
     </div>
