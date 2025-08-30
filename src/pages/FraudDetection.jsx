@@ -194,12 +194,7 @@ const FraudDetection = () => {
       </div>
 
       {/* Customer Data Table */}
-      {selectedBatch.results.fraudDetection && (
-        <CustomerDataTable 
-          data={customerData}
-          onExportCSV={handleExportCSV}
-        />
-      )}
+      
       {/* Step Progress */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         <StepIndicator
@@ -238,12 +233,19 @@ const FraudDetection = () => {
               <p className="text-2xl font-bold text-red-600">{selectedBatch.results.fraudDetection.fraudDetected}</p>
             </div>
             <div className="bg-white rounded-lg p-4 border border-gray-200">
-              <p className="text-sm text-gray-600">Model Accuracy</p>
-              <p className="text-2xl font-bold text-green-600">{selectedBatch.results.fraudDetection.accuracy}%</p>
+              <p className="text-sm text-gray-600">Not Fraud Records</p>
+              <p className="text-2xl font-bold text-green-600">{selectedBatch.results.fraudDetection.accuracy}</p>
             </div>
           </div>
 
         </div>
+      )}
+
+      {selectedBatch.results.fraudDetection && (
+        <CustomerDataTable 
+          data={customerData}
+          onExportCSV={console.log("Export CSV clicked")}
+        />
       )}
     </div>
   );
