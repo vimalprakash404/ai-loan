@@ -4,9 +4,8 @@ import { useAppContext } from '../context/AppContext';
 import { useBatch } from '../hooks/useBatch';
 import StepIndicator from '../components/ui/StepIndicator';
 import ProcessingButton from '../components/ui/ProcessingButton';
-import MarketInsights from '../components/ui/MarketInsights';
-import GeographicHeatmap from '../components/ui/GeographicHeatmap';
-import RiskFactorAnalysis from '../components/ui/RiskFactorAnalysis';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import { MapPin, TrendingUp, AlertTriangle, Users, Shield, CheckCircle, AlertCircle } from 'lucide-react';
 import marketData from '../../marget.json';
 
 const MarketIntelligence = () => {
