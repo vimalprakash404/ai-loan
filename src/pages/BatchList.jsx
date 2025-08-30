@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppContext } from '../context/AppContext';
-import BatchStats from '../components/ui/BatchStats';
 import { Upload, FileText } from 'lucide-react';
 import { FraudTrendChart, ModelPerformanceChart } from '../components/Charts';
 
@@ -41,16 +40,7 @@ const BatchList = () => {
 
   return (
     <div className="space-y-6 lg:space-y-8">
-      {/* Page Header */}
-      <div>
-        <h2 className="text-2xl font-bold text-gray-900">Fraud Detection System</h2>
-        <p className="text-gray-600 mt-1">Upload customer data and run comprehensive fraud analysis</p>
-      </div>
-
-      <BatchStats batches={batches} />
-
-      {/* Enhanced File Upload Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-8 lg:p-12">
+       <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-8 lg:p-12">
         <div className="text-center max-w-2xl mx-auto">
           <div className="mb-6">
             <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
