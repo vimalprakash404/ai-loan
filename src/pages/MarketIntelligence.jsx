@@ -106,17 +106,42 @@ const MarketIntelligence = () => {
 
 const MarketIntelligenceAnalysis = ({ marketData }) => {
   // Use the imported market data from marget.json
-  const dataArray = Array.isArray(marketDataImport) ? marketDataImport : 
-                   marketDataImport?.data ? marketDataImport.data : 
-                   [];
+  let dataArray = [];
+  
+  try {
+    // Handle different possible structures of the JSON file
+    if (Array.isArray(marketDataImport)) {
+      dataArray = marketDataImport;
+    } else if (marketDataImport && typeof marketDataImport === 'object') {
+      // Try common property names for data arrays
+      dataArray = marketDataImport.data || 
+                  marketDataImport.customers || 
+                  marketDataImport.records || 
+                  Object.values(marketDataImport)[0] || 
+                  [];
+    }
+    
+    // Ensure we have an array
+    if (!Array.isArray(dataArray)) {
+      dataArray = [];
+    }
+  } catch (error) {
+    console.error('Error processing market data:', error);
+    dataArray = [];
+  }
+
+  console.log('Market data loaded:', dataArray.length, 'records');
 
   if (dataArray.length === 0) {
     return (
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
         <div className="text-center py-8">
           <AlertTriangle className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">No Market Data Available</h3>
-          <p className="text-gray-600">Market intelligence data is not available for analysis.</p>
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">Loading Market Data...</h3>
+          <p className="text-gray-600">Please ensure marget.json contains valid customer data.</p>
+          <div className="mt-4 text-xs text-gray-500">
+            Expected format: Array of customer objects or object with data property
+          </div>
         </div>
       </div>
     );
