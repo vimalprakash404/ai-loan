@@ -118,7 +118,7 @@ const BatchList = () => {
       </div>
 
       <div className="space-y-4">
-        <h3 className="text-lg font-bold text-gray-900">Recent Batches</h3>
+        <h3 className="text-lg font-bold text-gray-900">Recent Records</h3>
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
           {batches.map((batch) => (
             <BatchCard key={batch.id} batch={batch} />

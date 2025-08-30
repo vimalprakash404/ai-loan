@@ -174,27 +174,6 @@ const FraudDetection = () => {
   return (
     <div className="space-y-6 lg:space-y-8">
       {/* Batch Header */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 lg:p-6">
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-          <div>
-            <h2 className="text-xl font-bold text-gray-900">Step 1: Fraud Detection</h2>
-            <p className="text-gray-600">Batch: {selectedBatch.name} ({selectedBatch.id})</p>
-          </div>
-          
-          <div className="flex items-center gap-3">
-            <ProcessingButton
-              currentStep={currentStep}
-              selectedBatch={selectedBatch}
-              isProcessing={isProcessing}
-              onProcessStep={() => processStep(batchId)}
-              onNextStep={handleNextStep}
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Customer Data Table */}
-      
       {/* Step Progress */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         <StepIndicator
@@ -219,6 +198,29 @@ const FraudDetection = () => {
           isDisabled={selectedBatch.results.marketIntel === null}
         />
       </div>
+      
+      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 lg:p-6">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+          <div>
+            <h2 className="text-xl font-bold text-gray-900">Step 1: Fraud Detection</h2>
+            <p className="text-gray-600">Batch: {selectedBatch.name} ({selectedBatch.id})</p>
+          </div>
+          
+          <div className="flex items-center gap-3">
+            <ProcessingButton
+              currentStep={currentStep}
+              selectedBatch={selectedBatch}
+              isProcessing={isProcessing}
+              onProcessStep={() => processStep(batchId)}
+              onNextStep={handleNextStep}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Customer Data Table */}
+      
+      
 
       {/* Results */}
       {selectedBatch.results.fraudDetection && (
