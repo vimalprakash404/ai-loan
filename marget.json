@@ -199,23 +199,23 @@
             "city_intelligence": {},
             "general_trends": {
                 "analysis": " INTELLIGENCE\n\n• Increase in digital fraud schemes\n• Concentration in tier-1 cities, emerging in tier-2\n• AI-powered forgery; real-time scoring recommended\n• Enhanced KYC and inter-insurer data sharing rising\n",
-                "sources": "Demo Mode",
+                "sources": " Mode",
                 "timestamp": "2025-08-30T12:52:24.712331"
             },
             "pincode_intelligence": {
                 "201301": {
-                    "analysis": "Demo: Pincode 201301 has 33.3% fraud rate. Increase monitoring.",
-                    "sources": "Demo Mode",
+                    "analysis": " Pincode 201301 has 33.3% fraud rate. Increase monitoring.",
+                    "sources": " Mode",
                     "timestamp": "2025-08-30T12:52:24.712679"
                 },
                 "395004": {
-                    "analysis": "Demo: Pincode 395004 has 50.0% fraud rate. Increase monitoring.",
-                    "sources": "Demo Mode",
+                    "analysis": " Pincode 395004 has 50.0% fraud rate. Increase monitoring.",
+                    "sources": " Mode",
                     "timestamp": "2025-08-30T12:52:24.712629"
                 },
                 "500074": {
-                    "analysis": "Demo: Pincode 500074 has 33.3% fraud rate. Increase monitoring.",
-                    "sources": "Demo Mode",
+                    "analysis": " Pincode 500074 has 33.3% fraud rate. Increase monitoring.",
+                    "sources": " Mode",
                     "timestamp": "2025-08-30T12:52:24.712566"
                 }
             }
