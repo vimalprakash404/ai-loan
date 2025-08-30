@@ -46,6 +46,8 @@ const CustomerSearch = () => {
           isActive={false}
           isCompleted={selectedBatch.results.fraudDetection !== null}
           isDisabled={false}
+          batchId={selectedBatch.id}
+          stepPath="fraud-detection"
         />
         <StepIndicator
           stepNumber={2}
@@ -53,6 +55,8 @@ const CustomerSearch = () => {
           isActive={false}
           isCompleted={selectedBatch.results.marketIntel !== null}
           isDisabled={selectedBatch.results.fraudDetection === null}
+          batchId={selectedBatch.id}
+          stepPath="market-intelligence"
         />
         <StepIndicator
           stepNumber={3}
@@ -60,6 +64,8 @@ const CustomerSearch = () => {
           isActive={currentStep === 3}
           isCompleted={selectedBatch.results.customerSearch !== null}
           isDisabled={selectedBatch.results.marketIntel === null}
+          batchId={selectedBatch.id}
+          stepPath="customer-search"
         />
       </div>
 
