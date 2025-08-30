@@ -11,7 +11,7 @@ const Header = ({ selectedBatch, currentStep }) => {
               <Shield className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-gray-900">FraudGuard</h1>
+              <h1 className="text-xl font-bold text-gray-900">SamAI Shield</h1>
               <p className="text-xs text-gray-500 hidden sm:block">ML-Powered Detection System</p>
             </div>
           </div>

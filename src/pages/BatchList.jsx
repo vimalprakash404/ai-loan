@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAppContext } from '../context/AppContext';
 import { Upload, FileText } from 'lucide-react';
 import { FraudTrendChart, ModelPerformanceChart } from '../components/Charts';
+import BatchCard from '../components/ui/BatchCard';
 
 const BatchList = () => {
   const [uploadedFile, setUploadedFile] = useState(null);
@@ -18,7 +19,7 @@ const BatchList = () => {
 
   const createNewBatch = () => {
     if (!uploadedFile) return;
-    
+
     const newBatch = {
       id: `BATCH-${String(batches.length + 1).padStart(3, '0')}`,
       name: uploadedFile.name.replace('.csv', ''),
@@ -32,7 +33,7 @@ const BatchList = () => {
         customerSearch: null
       }
     };
-    
+
     setBatches([newBatch, ...batches]);
     setUploadedFile(null);
     navigate(`/batch/${newBatch.id}/fraud-detection`);
@@ -40,7 +41,7 @@ const BatchList = () => {
 
   return (
     <div className="space-y-6 lg:space-y-8">
-       <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-8 lg:p-12">
+      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-8 lg:p-12">
         <div className="text-center max-w-2xl mx-auto">
           <div className="mb-6">
             <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -117,24 +118,12 @@ const BatchList = () => {
         </div>
       </div>
 
-      {/* Overall Analytics */}
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100">
-          <div className="p-4 lg:p-6 border-b border-gray-100">
-            <h3 className="text-lg font-bold text-gray-900">Batch Processing Trends</h3>
-          </div>
-          <div className="p-4 lg:p-6">
-            <FraudTrendChart />
-          </div>
-        </div>
-
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100">
-          <div className="p-4 lg:p-6 border-b border-gray-100">
-            <h3 className="text-lg font-bold text-gray-900">System Performance</h3>
-          </div>
-          <div className="p-4 lg:p-6">
-            <ModelPerformanceChart />
-          </div>
+      <div className="space-y-4">
+        <h3 className="text-lg font-bold text-gray-900">Recent Batches</h3>
+        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
+          {batches.map((batch) => (
+            <BatchCard key={batch.id} batch={batch} />
+          ))}
         </div>
       </div>
     </div>
