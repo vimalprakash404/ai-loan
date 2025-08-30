@@ -4,9 +4,32 @@ import { useAppContext } from '../context/AppContext';
 import { useBatch } from '../hooks/useBatch';
 import StepIndicator from '../components/ui/StepIndicator';
 import ProcessingButton from '../components/ui/ProcessingButton';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
-import { MapPin, TrendingUp, AlertTriangle, Users, Shield, CheckCircle, AlertCircle } from 'lucide-react';
+import { MapPin, TrendingUp, AlertTriangle } from 'lucide-react';
 import marketDataImport from '../../marget.json';
+
+// CSV export helper
+function exportToCSV(data, columns, filename) {
+  const header = columns.map(col => `"${col.header}"`).join(',');
+  const rows = data.map(row =>
+    columns.map(col => {
+      let val = typeof col.accessor === 'function' ? col.accessor(row) : row[col.accessor];
+      if (typeof val === 'string') val = val.replace(/"/g, '""');
+      return `"${val ?? ''}"`;
+    }).join(',')
+  );
+  const csvContent = [header, ...rows].join('\r\n');
+  const blob = new Blob([csvContent], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(() => {
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }, 100);
+}
 
 const MarketIntelligence = () => {
   const navigate = useNavigate();
@@ -28,26 +51,6 @@ const MarketIntelligence = () => {
   return (
     <div className="space-y-6 lg:space-y-8">
       {/* Batch Header */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 lg:p-6">
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-          <div>
-            <h2 className="text-xl font-bold text-gray-900">Step 2: Market Intelligence</h2>
-            <p className="text-gray-600">Batch: {selectedBatch.name} ({selectedBatch.id})</p>
-          </div>
-          
-          <div className="flex items-center gap-3">
-            <ProcessingButton
-              currentStep={currentStep}
-              selectedBatch={selectedBatch}
-              isProcessing={isProcessing}
-              onProcessStep={() => processStep(batchId)}
-              onNextStep={handleNextStep}
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Step Progress */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         <StepIndicator
           stepNumber={1}
@@ -77,25 +80,31 @@ const MarketIntelligence = () => {
           stepPath="customer-search"
         />
       </div>
+      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 lg:p-6">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+          <div>
+            <h2 className="text-xl font-bold text-gray-900">Step 2: Market Intelligence</h2>
+            <p className="text-gray-600">Batch: {selectedBatch.name} ({selectedBatch.id})</p>
+          </div>
+          
+          <div className="flex items-center gap-3">
+            <ProcessingButton
+              currentStep={currentStep}
+              selectedBatch={selectedBatch}
+              isProcessing={isProcessing}
+              onProcessStep={() => processStep(batchId)}
+              onNextStep={handleNextStep}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Step Progress */}
+      
 
       {/* Results */}
       {selectedBatch.results.marketIntel && (
         <div className="space-y-6">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="bg-white rounded-lg p-4 border border-gray-200">
-              <p className="text-sm text-gray-600">Records Analyzed</p>
-              <p className="text-2xl font-bold text-gray-900">{selectedBatch.results.marketIntel.analyzed.toLocaleString()}</p>
-            </div>
-            <div className="bg-white rounded-lg p-4 border border-gray-200">
-              <p className="text-sm text-gray-600">High Risk Areas</p>
-              <p className="text-2xl font-bold text-orange-600">{selectedBatch.results.marketIntel.highRiskAreas}</p>
-            </div>
-            <div className="bg-white rounded-lg p-4 border border-gray-200">
-              <p className="text-sm text-gray-600">Avg Risk Score</p>
-              <p className="text-2xl font-bold text-purple-600">{selectedBatch.results.marketIntel.avgRiskScore}%</p>
-            </div>
-          </div>
-
           {/* Market Intelligence Analysis */}
           <MarketIntelligenceAnalysis />
         </div>
@@ -104,254 +113,132 @@ const MarketIntelligence = () => {
   );
 };
 
-const MarketIntelligenceAnalysis = ({ marketData }) => {
+const MarketIntelligenceAnalysis = () => {
   // Use the imported market data from marget.json
-  let dataArray = [];
-  
-  try {
-    // Handle different possible structures of the JSON file
-    if (Array.isArray(marketDataImport)) {
-      dataArray = marketDataImport;
-    } else if (marketDataImport && typeof marketDataImport === 'object') {
-      // Try common property names for data arrays
-      dataArray = marketDataImport.data || 
-                  marketDataImport.customers || 
-                  marketDataImport.records || 
-                  Object.values(marketDataImport)[0] || 
-                  [];
-    }
-    
-    // Ensure we have an array
-    if (!Array.isArray(dataArray)) {
-      dataArray = [];
-    }
-  } catch (error) {
-    console.error('Error processing market data:', error);
-    dataArray = [];
-  }
-
-  console.log('Market data loaded:', dataArray.length, 'records');
-
-  if (dataArray.length === 0) {
+  const m = marketDataImport?.marketingData;
+  if (!m) {
     return (
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
         <div className="text-center py-8">
           <AlertTriangle className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">Loading Market Data...</h3>
-          <p className="text-gray-600">Please ensure marget.json contains valid customer data.</p>
-          <div className="mt-4 text-xs text-gray-500">
-            Expected format: Array of customer objects or object with data property
-          </div>
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">No Market Data Found</h3>
+          <p className="text-gray-600">Could not load analytics from marget.json.</p>
         </div>
       </div>
     );
   }
 
-  // Calculate insights from the data
-  const totalRecords = dataArray.length;
-  const fraudulentRecords = dataArray.filter(record => record.is_fraud === 1).length;
-  const fraudRate = ((fraudulentRecords / totalRecords) * 100).toFixed(1);
-  
-  // Group by city and calculate risk scores
-  const cityStats = dataArray.reduce((acc, record) => {
-    const city = record.city;
-    if (!acc[city]) {
-      acc[city] = {
-        city,
-        totalRecords: 0,
-        fraudRecords: 0,
-        avgCreditScore: 0,
-        avgIncomeAlignment: 0,
-        avgDigitalFootprint: 0,
-        pincodes: new Set()
-      };
-    }
-    
-    acc[city].totalRecords++;
-    acc[city].fraudRecords += record.is_fraud;
-    acc[city].avgCreditScore += record.credit_score;
-    acc[city].avgIncomeAlignment += record.income_profession_alignment;
-    acc[city].avgDigitalFootprint += record.digital_footprint_consistency;
-    acc[city].pincodes.add(record.pincode);
-    
-    return acc;
-  }, {});
+  // Executive summary
+  const exec = m.executive_summary;
+  // City analysis
+  const cities = m.geographic_analysis?.city_analysis || [];
+  // Pincode analysis
+  const pincodes = m.geographic_analysis?.pincode_analysis || [];
+  // Recommendations
+  const recommendations = m.recommendations || [];
+  // Alerts
+  const alerts = m.warnings_alerts || [];
+  // General trends
+  const trends = m.perplexity_intelligence?.general_trends?.analysis || "";
 
-  // Calculate averages and fraud rates
-  const cityAnalysis = Object.values(cityStats).map(city => ({
-    ...city,
-    fraudRate: ((city.fraudRecords / city.totalRecords) * 100).toFixed(1),
-    avgCreditScore: Math.round(city.avgCreditScore / city.totalRecords),
-    avgIncomeAlignment: (city.avgIncomeAlignment / city.totalRecords).toFixed(3),
-    avgDigitalFootprint: (city.avgDigitalFootprint / city.totalRecords).toFixed(3),
-    uniquePincodes: city.pincodes.size,
-    riskLevel: city.fraudRecords / city.totalRecords > 0.15 ? 'HIGH' : 
-               city.fraudRecords / city.totalRecords > 0.08 ? 'MEDIUM' : 'LOW'
-  })).sort((a, b) => parseFloat(b.fraudRate) - parseFloat(a.fraudRate));
-
-  // High-risk areas (fraud rate > 15%)
-  const highRiskAreas = cityAnalysis.filter(city => parseFloat(city.fraudRate) > 15);
-  
-  // Credit score distribution
-  const creditScoreRanges = [
-    { range: '300-500', min: 300, max: 500, color: '#ef4444' },
-    { range: '501-600', min: 501, max: 600, color: '#f97316' },
-    { range: '601-700', min: 601, max: 700, color: '#eab308' },
-    { range: '701-800', min: 701, max: 800, color: '#22c55e' },
-    { range: '801-850', min: 801, max: 850, color: '#10b981' }
+  // CSV column definitions
+  const cityColumns = [
+    { header: 'City', accessor: 'City' },
+    { header: 'Fraud Rate', accessor: row => (row.fraud_rate * 100).toFixed(1) + '%' },
+    { header: 'Fraud Cases', accessor: 'fraud_cases' },
+    { header: 'Risk Level', accessor: 'risk_level' },
+    { header: 'Customers', accessor: 'total_customers' },
+    { header: 'Pincodes', accessor: 'unique_pincodes' },
   ];
-
-  const creditDistribution = creditScoreRanges.map(range => ({
-    ...range,
-    count: dataArray.filter(record => 
-      record.credit_score >= range.min && record.credit_score <= range.max
-    ).length,
-    fraudCount: dataArray.filter(record => 
-      record.credit_score >= range.min && record.credit_score <= range.max && record.is_fraud === 1
-    ).length
-  }));
-
-  // Document quality analysis
-  const documentQualityRanges = [
-    { range: '0.0-0.2', min: 0.0, max: 0.2 },
-    { range: '0.2-0.4', min: 0.2, max: 0.4 },
-    { range: '0.4-0.6', min: 0.4, max: 0.6 },
-    { range: '0.6-0.8', min: 0.6, max: 0.8 },
-    { range: '0.8-1.0', min: 0.8, max: 1.0 }
+  const pincodeColumns = [
+    { header: 'Pincode', accessor: 'Pincode' },
+    { header: 'Area', accessor: 'area_name' },
+    { header: 'City', accessor: 'city' },
+    { header: 'Fraud Rate', accessor: row => (row.fraud_rate * 100).toFixed(1) + '%' },
+    { header: 'Risk Level', accessor: 'risk_level' },
+    { header: 'Customers', accessor: 'total_customers' },
   ];
-
-  const documentQualityAnalysis = documentQualityRanges.map(range => ({
-    range: range.range,
-    total: dataArray.filter(record => 
-      record.document_quality_score >= range.min && record.document_quality_score < range.max
-    ).length,
-    fraud: dataArray.filter(record => 
-      record.document_quality_score >= range.min && record.document_quality_score < range.max && record.is_fraud === 1
-    ).length
-  })).map(item => ({
-    ...item,
-    fraudRate: item.total > 0 ? ((item.fraud / item.total) * 100).toFixed(1) : '0.0'
-  }));
-
-  // Verification analysis
-  const verificationAnalysis = {
-    address: dataArray.reduce((acc, record) => {
-      acc[record.address_verification_result] = (acc[record.address_verification_result] || 0) + 1;
-      return acc;
-    }, {}),
-    income: dataArray.reduce((acc, record) => {
-      acc[record.income_verification_result] = (acc[record.income_verification_result] || 0) + 1;
-      return acc;
-    }, {}),
-    employment: dataArray.reduce((acc, record) => {
-      acc[record.employment_verification_result] = (acc[record.employment_verification_result] || 0) + 1;
-      return acc;
-    }, {})
-  };
-
-  // Top risk factors
-  const riskFactors = [
-    {
-      factor: 'Low Credit Score',
-      count: dataArray.filter(r => r.credit_score < 600).length,
-      percentage: ((dataArray.filter(r => r.credit_score < 600).length / totalRecords) * 100).toFixed(1)
-    },
-    {
-      factor: 'High Debt-to-Income',
-      count: dataArray.filter(r => r.debt_to_income_ratio > 0.6).length,
-      percentage: ((dataArray.filter(r => r.debt_to_income_ratio > 0.6).length / totalRecords) * 100).toFixed(1)
-    },
-    {
-      factor: 'Poor Document Quality',
-      count: dataArray.filter(r => r.document_quality_score < 0.3).length,
-      percentage: ((dataArray.filter(r => r.document_quality_score < 0.3).length / totalRecords) * 100).toFixed(1)
-    },
-    {
-      factor: 'Failed Employment Verification',
-      count: dataArray.filter(r => r.employment_verification_result === 'Failed' || r.employment_verification_result === 'Not Verified').length,
-      percentage: ((dataArray.filter(r => r.employment_verification_result === 'Failed' || r.employment_verification_result === 'Not Verified').length / totalRecords) * 100).toFixed(1)
-    }
+  const alertsColumns = [
+    { header: 'Location', accessor: row => row.location || row.area_name },
+    { header: 'Priority', accessor: 'priority' },
+    { header: 'Type', accessor: row => row.type?.replace(/_/g, ' ') },
+    { header: 'Fraud Cases', accessor: 'fraud_cases' },
+    { header: 'Fraud Rate', accessor: row => row.fraud_rate ? (row.fraud_rate * 100).toFixed(1) + '%' : '' },
+    { header: 'Actions', accessor: row => (row.immediate_actions || row.recommended_actions || []).join('; ') },
+  ];
+  const recommendationsColumns = [
+    { header: 'Action', accessor: 'action' },
+    { header: 'Priority', accessor: 'priority' },
+    { header: 'Affected Locations', accessor: 'affected_locations' },
   ];
 
   return (
     <div className="space-y-6">
-      {/* Overview Stats */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      {/* Executive Summary */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="bg-white rounded-lg p-4 border border-gray-200">
-          <div className="flex items-center gap-3 mb-2">
-            <Users className="w-5 h-5 text-blue-600" />
-            <span className="text-sm font-medium text-gray-600">Total Records</span>
-          </div>
-          <p className="text-2xl font-bold text-gray-900">{totalRecords.toLocaleString()}</p>
+          <p className="text-sm text-gray-600">Total Customers</p>
+          <p className="text-2xl font-bold text-gray-900">{exec.total_customers}</p>
         </div>
-        
         <div className="bg-white rounded-lg p-4 border border-gray-200">
-          <div className="flex items-center gap-3 mb-2">
-            <AlertTriangle className="w-5 h-5 text-red-600" />
-            <span className="text-sm font-medium text-gray-600">Fraud Rate</span>
-          </div>
-          <p className="text-2xl font-bold text-red-600">{fraudRate}%</p>
+          <p className="text-sm text-gray-600">Fraud Cases</p>
+          <p className="text-2xl font-bold text-red-600">{exec.total_fraud_cases}</p>
         </div>
-        
         <div className="bg-white rounded-lg p-4 border border-gray-200">
-          <div className="flex items-center gap-3 mb-2">
-            <MapPin className="w-5 h-5 text-orange-600" />
-            <span className="text-sm font-medium text-gray-600">High Risk Areas</span>
-          </div>
-          <p className="text-2xl font-bold text-orange-600">{highRiskAreas.length}</p>
-        </div>
-        
-        <div className="bg-white rounded-lg p-4 border border-gray-200">
-          <div className="flex items-center gap-3 mb-2">
-            <Shield className="w-5 h-5 text-green-600" />
-            <span className="text-sm font-medium text-gray-600">Cities Analyzed</span>
-          </div>
-          <p className="text-2xl font-bold text-green-600">{cityAnalysis.length}</p>
+          <p className="text-sm text-gray-600">Overall Fraud Rate</p>
+          <p className="text-2xl font-bold text-orange-600">{(exec.overall_fraud_rate * 100).toFixed(1)}%</p>
         </div>
       </div>
 
-      {/* Geographic Risk Analysis */}
+      {/* City Risk Table */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
         <div className="flex items-center gap-3 mb-6">
           <MapPin className="w-6 h-6 text-blue-600" />
-          <h3 className="text-lg font-bold text-gray-900">Geographic Risk Analysis</h3>
+          <h3 className="text-lg font-bold text-gray-900">City Risk Analysis</h3>
+          <button
+            className="ml-auto px-3 py-1.5 rounded bg-blue-100 text-blue-700 text-xs font-semibold hover:bg-blue-200"
+            onClick={() => exportToCSV(cities, cityColumns, 'city-risk-analysis.csv')}
+            type="button"
+          >
+            Export CSV
+          </button>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
               <tr className="border-b border-gray-200">
                 <th className="text-left py-3 px-4 font-semibold text-gray-700">City</th>
-                <th className="text-left py-3 px-4 font-semibold text-gray-700">Records</th>
                 <th className="text-left py-3 px-4 font-semibold text-gray-700">Fraud Rate</th>
-                <th className="text-left py-3 px-4 font-semibold text-gray-700">Avg Credit Score</th>
+                <th className="text-left py-3 px-4 font-semibold text-gray-700">Fraud Cases</th>
                 <th className="text-left py-3 px-4 font-semibold text-gray-700">Risk Level</th>
+                <th className="text-left py-3 px-4 font-semibold text-gray-700">Customers</th>
                 <th className="text-left py-3 px-4 font-semibold text-gray-700">Pincodes</th>
               </tr>
             </thead>
             <tbody>
-              {cityAnalysis.map((city, index) => (
-                <tr key={city.city} className="border-b border-gray-100 hover:bg-gray-50">
-                  <td className="py-3 px-4 font-medium text-gray-900">{city.city}</td>
-                  <td className="py-3 px-4 text-gray-700">{city.totalRecords}</td>
+              {cities.map((city, idx) => (
+                <tr key={city.City} className="border-b border-gray-100 hover:bg-gray-50">
+                  <td className="py-3 px-4 font-medium text-gray-900">{city.City}</td>
                   <td className="py-3 px-4">
                     <span className={`font-semibold ${
-                      parseFloat(city.fraudRate) > 15 ? 'text-red-600' :
-                      parseFloat(city.fraudRate) > 8 ? 'text-orange-600' : 'text-green-600'
+                      city.risk_level === 'CRITICAL' ? 'text-red-600' :
+                      city.risk_level === 'HIGH' ? 'text-orange-600' : 'text-green-600'
                     }`}>
-                      {city.fraudRate}%
+                      {(city.fraud_rate * 100).toFixed(1)}%
                     </span>
                   </td>
-                  <td className="py-3 px-4 text-gray-700">{city.avgCreditScore}</td>
+                  <td className="py-3 px-4 text-gray-700">{city.fraud_cases}</td>
                   <td className="py-3 px-4">
                     <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                      city.riskLevel === 'HIGH' ? 'bg-red-100 text-red-700' :
-                      city.riskLevel === 'MEDIUM' ? 'bg-orange-100 text-orange-700' :
+                      city.risk_level === 'CRITICAL' ? 'bg-red-100 text-red-700' :
+                      city.risk_level === 'HIGH' ? 'bg-orange-100 text-orange-700' :
                       'bg-green-100 text-green-700'
                     }`}>
-                      {city.riskLevel}
+                      {city.risk_level}
                     </span>
                   </td>
-                  <td className="py-3 px-4 text-gray-700">{city.uniquePincodes}</td>
+                  <td className="py-3 px-4 text-gray-700">{city.total_customers}</td>
+                  <td className="py-3 px-4 text-gray-700">{city.unique_pincodes}</td>
                 </tr>
               ))}
             </tbody>
@@ -359,219 +246,135 @@ const MarketIntelligenceAnalysis = ({ marketData }) => {
         </div>
       </div>
 
-      {/* Credit Score Distribution Chart */}
+      {/* Pincode Risk Table */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h3 className="text-lg font-bold text-gray-900 mb-4">Credit Score Distribution</h3>
-        <div className="h-64">
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={creditDistribution}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
-              <XAxis 
-                dataKey="range"
-                axisLine={false}
-                tickLine={false}
-                tick={{ fontSize: 12, fill: '#6b7280' }}
-              />
-              <YAxis 
-                axisLine={false}
-                tickLine={false}
-                tick={{ fontSize: 12, fill: '#6b7280' }}
-              />
-              <Tooltip 
-                formatter={(value, name) => [value, name === 'count' ? 'Total Records' : 'Fraud Cases']}
-                contentStyle={{ 
-                  backgroundColor: 'white', 
-                  border: '1px solid #e5e7eb',
-                  borderRadius: '8px'
-                }}
-              />
-              <Bar dataKey="count" fill="#3b82f6" radius={[4, 4, 0, 0]} name="count" />
-              <Bar dataKey="fraudCount" fill="#ef4444" radius={[4, 4, 0, 0]} name="fraudCount" />
-            </BarChart>
-          </ResponsiveContainer>
+        <div className="flex items-center gap-3 mb-6">
+          <MapPin className="w-6 h-6 text-orange-600" />
+          <h3 className="text-lg font-bold text-gray-900">High-Risk Pincodes</h3>
+          <button
+            className="ml-auto px-3 py-1.5 rounded bg-orange-100 text-orange-700 text-xs font-semibold hover:bg-orange-200"
+            onClick={() => exportToCSV(pincodes, pincodeColumns, 'pincode-risk-analysis.csv')}
+            type="button"
+          >
+            Export CSV
+          </button>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead>
+              <tr className="border-b border-gray-200">
+                <th className="text-left py-3 px-4 font-semibold text-gray-700">Pincode</th>
+                <th className="text-left py-3 px-4 font-semibold text-gray-700">Area</th>
+                <th className="text-left py-3 px-4 font-semibold text-gray-700">City</th>
+                <th className="text-left py-3 px-4 font-semibold text-gray-700">Fraud Rate</th>
+                <th className="text-left py-3 px-4 font-semibold text-gray-700">Risk Level</th>
+                <th className="text-left py-3 px-4 font-semibold text-gray-700">Customers</th>
+              </tr>
+            </thead>
+            <tbody>
+              {pincodes.map((p, idx) => (
+                <tr key={p.Pincode} className="border-b border-gray-100 hover:bg-gray-50">
+                  <td className="py-3 px-4 font-medium text-gray-900">{p.Pincode}</td>
+                  <td className="py-3 px-4 text-gray-700">{p.area_name}</td>
+                  <td className="py-3 px-4 text-gray-700">{p.city}</td>
+                  <td className="py-3 px-4">
+                    <span className={`font-semibold ${
+                      p.risk_level === 'CRITICAL' ? 'text-red-600' :
+                      p.risk_level === 'HIGH' ? 'text-orange-600' : 'text-green-600'
+                    }`}>
+                      {(p.fraud_rate * 100).toFixed(1)}%
+                    </span>
+                  </td>
+                  <td className="py-3 px-4">
+                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                      p.risk_level === 'CRITICAL' ? 'bg-red-100 text-red-700' :
+                      p.risk_level === 'HIGH' ? 'bg-orange-100 text-orange-700' :
+                      'bg-green-100 text-green-700'
+                    }`}>
+                      {p.risk_level}
+                    </span>
+                  </td>
+                  <td className="py-3 px-4 text-gray-700">{p.total_customers}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
 
-      {/* Document Quality vs Fraud Rate */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h3 className="text-lg font-bold text-gray-900 mb-4">Document Quality vs Fraud Rate</h3>
-        <div className="h-64">
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={documentQualityAnalysis}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
-              <XAxis 
-                dataKey="range"
-                axisLine={false}
-                tickLine={false}
-                tick={{ fontSize: 12, fill: '#6b7280' }}
-                label={{ value: 'Document Quality Score', position: 'insideBottom', offset: -5 }}
-              />
-              <YAxis 
-                axisLine={false}
-                tickLine={false}
-                tick={{ fontSize: 12, fill: '#6b7280' }}
-                label={{ value: 'Fraud Rate (%)', angle: -90, position: 'insideLeft' }}
-              />
-              <Tooltip 
-                formatter={(value, name) => [
-                  name === 'fraudRate' ? `${value}%` : value,
-                  name === 'fraudRate' ? 'Fraud Rate' : 'Total Records'
-                ]}
-                contentStyle={{ 
-                  backgroundColor: 'white', 
-                  border: '1px solid #e5e7eb',
-                  borderRadius: '8px'
-                }}
-              />
-              <Bar dataKey="fraudRate" fill="#f97316" radius={[4, 4, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-      </div>
-
-      {/* Key Risk Factors */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h3 className="text-lg font-bold text-gray-900 mb-4">Key Risk Factors</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {riskFactors.map((factor, index) => (
-            <div key={index} className="border border-gray-200 rounded-lg p-4">
-              <div className="flex items-center justify-between mb-2">
-                <h4 className="font-semibold text-gray-900">{factor.factor}</h4>
-                <span className="text-sm font-medium text-orange-600">{factor.percentage}%</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="flex-1 bg-gray-200 rounded-full h-2">
-                  <div 
-                    className="bg-orange-500 h-2 rounded-full transition-all duration-300"
-                    style={{ width: `${factor.percentage}%` }}
-                  ></div>
+      {/* Alerts & Warnings */}
+      {alerts.length > 0 && (
+        <div className="bg-red-50 border border-red-200 rounded-xl p-6">
+          <div className="flex items-start gap-3 mb-2">
+            <AlertTriangle className="w-6 h-6 text-red-600 mt-1" />
+            <h3 className="text-lg font-bold text-red-900">Alerts & Warnings</h3>
+            <button
+              className="ml-auto px-3 py-1.5 rounded bg-red-100 text-red-700 text-xs font-semibold hover:bg-red-200"
+              onClick={() => exportToCSV(alerts, alertsColumns, 'alerts-warnings.csv')}
+              type="button"
+            >
+              Export CSV
+            </button>
+          </div>
+          <div className="space-y-3">
+            {alerts.map((alert, idx) => (
+              <div key={idx} className="bg-white rounded-lg p-3 border border-red-200">
+                <div className="flex items-center justify-between">
+                  <span className="font-semibold text-gray-900">{alert.location || alert.area_name}</span>
+                  <span className="text-red-600 font-bold">{alert.priority}</span>
                 </div>
-                <span className="text-sm text-gray-600">{factor.count} records</span>
+                <p className="text-sm text-gray-700">{alert.type?.replace(/_/g, ' ')}</p>
+                {alert.immediate_actions && (
+                  <ul className="list-disc ml-5 text-sm text-red-700">
+                    {alert.immediate_actions.map((a, i) => <li key={i}>{a}</li>)}
+                  </ul>
+                )}
+                {alert.recommended_actions && (
+                  <ul className="list-disc ml-5 text-sm text-red-700">
+                    {alert.recommended_actions.map((a, i) => <li key={i}>{a}</li>)}
+                  </ul>
+                )}
               </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Recommendations */}
+      <div className="bg-blue-50 border border-blue-200 rounded-xl p-6">
+        <div className="flex items-start gap-3 mb-2">
+          <TrendingUp className="w-6 h-6 text-blue-600 mt-1" />
+          <h3 className="text-lg font-bold text-blue-900">AI-Powered Recommendations</h3>
+          <button
+            className="ml-auto px-3 py-1.5 rounded bg-blue-100 text-blue-700 text-xs font-semibold hover:bg-blue-200"
+            onClick={() => exportToCSV(recommendations, recommendationsColumns, 'recommendations.csv')}
+            type="button"
+          >
+            Export CSV
+          </button>
+        </div>
+        <div className="space-y-3">
+          {recommendations.map((rec, idx) => (
+            <div key={idx} className="bg-white rounded-lg p-4 border border-blue-200">
+              <h4 className="font-semibold text-gray-900 mb-1">{rec.action}</h4>
+              <p className="text-sm text-gray-700">
+                Priority: <span className="font-bold">{rec.priority}</span>
+                {rec.affected_locations !== "All" && (
+                  <> &middot; Affected: {rec.affected_locations}</>
+                )}
+              </p>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Verification Status Overview */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Address Verification */}
+      {/* General Trends */}
+      {trends && (
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-          <h4 className="font-bold text-gray-900 mb-4">Address Verification</h4>
-          <div className="space-y-3">
-            {Object.entries(verificationAnalysis.address).map(([status, count]) => (
-              <div key={status} className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  {status === 'Verified' ? (
-                    <CheckCircle className="w-4 h-4 text-green-600" />
-                  ) : (
-                    <AlertTriangle className="w-4 h-4 text-red-600" />
-                  )}
-                  <span className="text-sm text-gray-700">{status}</span>
-                </div>
-                <span className="font-semibold text-gray-900">{count}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Income Verification */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-          <h4 className="font-bold text-gray-900 mb-4">Income Verification</h4>
-          <div className="space-y-3">
-            {Object.entries(verificationAnalysis.income).map(([status, count]) => (
-              <div key={status} className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  {status === 'Verified' ? (
-                    <CheckCircle className="w-4 h-4 text-green-600" />
-                  ) : (
-                    <AlertTriangle className="w-4 h-4 text-red-600" />
-                  )}
-                  <span className="text-sm text-gray-700">{status}</span>
-                </div>
-                <span className="font-semibold text-gray-900">{count}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Employment Verification */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-          <h4 className="font-bold text-gray-900 mb-4">Employment Verification</h4>
-          <div className="space-y-3">
-            {Object.entries(verificationAnalysis.employment).map(([status, count]) => (
-              <div key={status} className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  {status === 'Verified' ? (
-                    <CheckCircle className="w-4 h-4 text-green-600" />
-                  ) : (
-                    <AlertTriangle className="w-4 h-4 text-red-600" />
-                  )}
-                  <span className="text-sm text-gray-700">{status}</span>
-                </div>
-                <span className="font-semibold text-gray-900">{count}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* High Risk Areas Alert */}
-      {highRiskAreas.length > 0 && (
-        <div className="bg-red-50 border border-red-200 rounded-xl p-6">
-          <div className="flex items-start gap-3">
-            <AlertTriangle className="w-6 h-6 text-red-600 mt-1" />
-            <div className="flex-1">
-              <h3 className="text-lg font-bold text-red-900 mb-2">High Risk Areas Detected</h3>
-              <p className="text-red-700 mb-4">
-                {highRiskAreas.length} cities show fraud rates above 15%. Immediate attention recommended.
-              </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                {highRiskAreas.map((area, index) => (
-                  <div key={index} className="bg-white rounded-lg p-3 border border-red-200">
-                    <div className="flex items-center justify-between">
-                      <span className="font-semibold text-gray-900">{area.city}</span>
-                      <span className="text-red-600 font-bold">{area.fraudRate}%</span>
-                    </div>
-                    <p className="text-sm text-gray-600">{area.totalRecords} records • {area.uniquePincodes} pincodes</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
+          <h3 className="text-lg font-bold text-gray-900 mb-2">General Trends</h3>
+          <pre className="text-gray-700 whitespace-pre-wrap">{trends}</pre>
         </div>
       )}
-
-      {/* AI Recommendations */}
-      <div className="bg-blue-50 border border-blue-200 rounded-xl p-6">
-        <div className="flex items-start gap-3">
-          <TrendingUp className="w-6 h-6 text-blue-600 mt-1" />
-          <div className="flex-1">
-            <h3 className="text-lg font-bold text-blue-900 mb-2">AI-Powered Recommendations</h3>
-            <div className="space-y-3">
-              <div className="bg-white rounded-lg p-4 border border-blue-200">
-                <h4 className="font-semibold text-gray-900 mb-1">Enhanced Verification</h4>
-                <p className="text-sm text-gray-700">
-                  Implement additional document verification for applications from {highRiskAreas.length > 0 ? highRiskAreas[0].city : 'high-risk areas'} 
-                  due to elevated fraud rates.
-                </p>
-              </div>
-              <div className="bg-white rounded-lg p-4 border border-blue-200">
-                <h4 className="font-semibold text-gray-900 mb-1">Credit Score Threshold</h4>
-                <p className="text-sm text-gray-700">
-                  Consider raising minimum credit score requirements to 650+ for applications with poor digital footprint consistency.
-                </p>
-              </div>
-              <div className="bg-white rounded-lg p-4 border border-blue-200">
-                <h4 className="font-semibold text-gray-900 mb-1">Employment Verification</h4>
-                <p className="text-sm text-gray-700">
-                  Strengthen employment verification processes as {riskFactors[3]?.percentage}% of records show verification failures.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };
