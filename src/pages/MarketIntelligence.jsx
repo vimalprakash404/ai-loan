@@ -97,7 +97,7 @@ const MarketIntelligence = () => {
           </div>
 
           {/* Market Intelligence Analysis */}
-          <MarketIntelligenceAnalysis marketData={marketDataImport} />
+          <MarketIntelligenceAnalysis />
         </div>
       )}
     </div>
@@ -105,10 +105,10 @@ const MarketIntelligence = () => {
 };
 
 const MarketIntelligenceAnalysis = ({ marketData }) => {
-  // Ensure marketData is an array
-  const dataArray = Array.isArray(marketData) ? marketData : 
-                   Array.isArray(marketDataImport) ? marketDataImport :
-                   marketDataImport?.data ? marketDataImport.data : [];
+  // Use the imported market data from marget.json
+  const dataArray = Array.isArray(marketDataImport) ? marketDataImport : 
+                   marketDataImport?.data ? marketDataImport.data : 
+                   [];
 
   if (dataArray.length === 0) {
     return (
