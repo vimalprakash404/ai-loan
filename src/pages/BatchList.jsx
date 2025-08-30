@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppContext } from '../context/AppContext';
 import { Upload, FileText } from 'lucide-react';
-import { FraudTrendChart, ModelPerformanceChart } from '../components/Charts';
 import BatchCard from '../components/ui/BatchCard';
 
 const BatchList = () => {
