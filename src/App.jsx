@@ -518,7 +518,17 @@ const App = () => {
                     </button>
                   )}
                   
-                  {selectedBatch.results.fraudDetection && (
+                  {selectedBatch.results.fraudDetection && currentStep === 1 && (
+                    <button
+                      onClick={() => setActiveTab('market-intelligence')}
+                      className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                    >
+                      <TrendingUp size={16} />
+                      Next: Market Intelligence
+                    </button>
+                  )}
+                  
+                  {selectedBatch.results.fraudDetection && currentStep !== 1 && (
                     <div className="flex items-center gap-2 text-green-600">
                       <CheckCircle size={20} />
                       <span className="font-semibold">Completed</span>
@@ -618,7 +628,17 @@ const App = () => {
                     </button>
                   )}
                   
-                  {selectedBatch.results.marketIntel && (
+                  {selectedBatch.results.marketIntel && currentStep === 2 && (
+                    <button
+                      onClick={() => setActiveTab('customer-search')}
+                      className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                    >
+                      <Search size={16} />
+                      Next: Customer Search
+                    </button>
+                  )}
+                  
+                  {selectedBatch.results.marketIntel && currentStep !== 2 && (
                     <div className="flex items-center gap-2 text-green-600">
                       <CheckCircle size={20} />
                       <span className="font-semibold">Completed</span>
@@ -721,7 +741,7 @@ const App = () => {
                   {selectedBatch.results.customerSearch && (
                     <div className="flex items-center gap-2 text-green-600">
                       <CheckCircle size={20} />
-                      <span className="font-semibold">Completed</span>
+                      <span className="font-semibold">All Steps Completed</span>
                     </div>
                   )}
                 </div>
