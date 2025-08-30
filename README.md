@@ -83,7 +83,7 @@ The system expects CSV files with the following columns:
 1. Install dependencies: `npm install`
 2. Start development server: `npm run dev`
 3. Login to the system
-4. Upload CSV files for batch processing
+4. Upload CSV files for  processing
 5. Follow the 3-step ML pipeline for comprehensive fraud analysis
 
 ## Technology Stack
