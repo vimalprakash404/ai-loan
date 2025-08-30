@@ -1,0 +1,3529 @@
+{
+    "success": true,
+    "marketingData": {
+        "executive_summary": {
+            "high_risk_locations": 4,
+            "immediate_alerts": 1,
+            "overall_fraud_rate": 0.425,
+            "total_customers": 200,
+            "total_fraud_cases": 85
+        },
+        "geographic_analysis": {
+            "city_analysis": [
+                {
+                    "City": "Hyderabad",
+                    "fraud_calculations": 17,
+                    "fraud_cases": 10,
+                    "fraud_concentration": 0.5882352941,
+                    "fraud_rate": 0.5882,
+                    "risk_level": "CRITICAL",
+                    "total_customers": 17,
+                    "unique_pincodes": 17
+                },
+                {
+                    "City": "Coimbatore",
+                    "fraud_calculations": 13,
+                    "fraud_cases": 7,
+                    "fraud_concentration": 0.5384615385,
+                    "fraud_rate": 0.5385,
+                    "risk_level": "CRITICAL",
+                    "total_customers": 13,
+                    "unique_pincodes": 13
+                },
+                {
+                    "City": "Indore",
+                    "fraud_calculations": 10,
+                    "fraud_cases": 5,
+                    "fraud_concentration": 0.5,
+                    "fraud_rate": 0.5,
+                    "risk_level": "CRITICAL",
+                    "total_customers": 10,
+                    "unique_pincodes": 10
+                },
+                {
+                    "City": "Kolkata",
+                    "fraud_calculations": 20,
+                    "fraud_cases": 10,
+                    "fraud_concentration": 0.5263157895,
+                    "fraud_rate": 0.5,
+                    "risk_level": "CRITICAL",
+                    "total_customers": 20,
+                    "unique_pincodes": 19
+                },
+                {
+                    "City": "Mumbai",
+                    "fraud_calculations": 12,
+                    "fraud_cases": 6,
+                    "fraud_concentration": 0.5,
+                    "fraud_rate": 0.5,
+                    "risk_level": "CRITICAL",
+                    "total_customers": 12,
+                    "unique_pincodes": 12
+                },
+                {
+                    "City": "Lucknow",
+                    "fraud_calculations": 19,
+                    "fraud_cases": 9,
+                    "fraud_concentration": 0.4736842105,
+                    "fraud_rate": 0.4737,
+                    "risk_level": "CRITICAL",
+                    "total_customers": 19,
+                    "unique_pincodes": 19
+                },
+                {
+                    "City": "Pune",
+                    "fraud_calculations": 25,
+                    "fraud_cases": 10,
+                    "fraud_concentration": 0.4,
+                    "fraud_rate": 0.4,
+                    "risk_level": "CRITICAL",
+                    "total_customers": 25,
+                    "unique_pincodes": 25
+                },
+                {
+                    "City": "Surat",
+                    "fraud_calculations": 19,
+                    "fraud_cases": 7,
+                    "fraud_concentration": 0.3888888889,
+                    "fraud_rate": 0.3684,
+                    "risk_level": "HIGH",
+                    "total_customers": 19,
+                    "unique_pincodes": 18
+                },
+                {
+                    "City": "Bangalore",
+                    "fraud_calculations": 23,
+                    "fraud_cases": 8,
+                    "fraud_concentration": 0.347826087,
+                    "fraud_rate": 0.3478,
+                    "risk_level": "HIGH",
+                    "total_customers": 23,
+                    "unique_pincodes": 23
+                },
+                {
+                    "City": "Chennai",
+                    "fraud_calculations": 22,
+                    "fraud_cases": 7,
+                    "fraud_concentration": 0.3181818182,
+                    "fraud_rate": 0.3182,
+                    "risk_level": "HIGH",
+                    "total_customers": 22,
+                    "unique_pincodes": 22
+                },
+                {
+                    "City": "Delhi",
+                    "fraud_calculations": 20,
+                    "fraud_cases": 6,
+                    "fraud_concentration": 0.3333333333,
+                    "fraud_rate": 0.3,
+                    "risk_level": "HIGH",
+                    "total_customers": 20,
+                    "unique_pincodes": 18
+                }
+            ],
+            "pincode_analysis": [
+                {
+                    "Pincode": 500074,
+                    "area_name": "LB Nagar",
+                    "city": "Surat",
+                    "deviation_from_mean": -0.0917,
+                    "fraud_calculations": 6,
+                    "fraud_cases": 2,
+                    "fraud_rate": 0.3333,
+                    "fraud_std": 0.5164,
+                    "is_known_high_risk": true,
+                    "priority_score": 0.4865926569,
+                    "risk_level": "HIGH",
+                    "total_customers": 6,
+                    "z_score": -0.1775755229
+                },
+                {
+                    "Pincode": 395004,
+                    "area_name": "Katargam",
+                    "city": "Kolkata",
+                    "deviation_from_mean": 0.075,
+                    "fraud_calculations": 4,
+                    "fraud_cases": 2,
+                    "fraud_rate": 0.5,
+                    "fraud_std": 0.5774,
+                    "is_known_high_risk": true,
+                    "priority_score": 0.4389677866,
+                    "risk_level": "CRITICAL",
+                    "total_customers": 4,
+                    "z_score": 0.1298926221
+                },
+                {
+                    "Pincode": 201301,
+                    "area_name": "Noida",
+                    "city": "Surat",
+                    "deviation_from_mean": -0.0917,
+                    "fraud_calculations": 3,
+                    "fraud_cases": 1,
+                    "fraud_rate": 0.3333,
+                    "fraud_std": 0.5774,
+                    "is_known_high_risk": true,
+                    "priority_score": 0.3309646138,
+                    "risk_level": "HIGH",
+                    "total_customers": 3,
+                    "z_score": -0.1588153793
+                },
+                {
+                    "Pincode": 110085,
+                    "area_name": "Rohini",
+                    "city": "Delhi",
+                    "deviation_from_mean": -0.0917,
+                    "fraud_calculations": 3,
+                    "fraud_cases": 1,
+                    "fraud_rate": 0.3333,
+                    "fraud_std": 0.5774,
+                    "is_known_high_risk": true,
+                    "priority_score": 0.3309646138,
+                    "risk_level": "HIGH",
+                    "total_customers": 3,
+                    "z_score": -0.1588153793
+                }
+            ],
+            "summary": {
+                "high_risk_pincodes": 4,
+                "known_hotspots_confirmed": 4,
+                "new_risk_areas": 0
+            }
+        },
+        "metadata": {
+            "analysis_timestamp": "2025-08-30 12:52:24",
+            "file_analyzed": "CSV File",
+            "perplexity_enabled": false,
+            "total_records": 200
+        },
+        "perplexity_intelligence": {
+            "city_intelligence": {},
+            "general_trends": {
+                "analysis": "DEMO MODE - SIMULATED INTELLIGENCE\n\n• Increase in digital fraud schemes\n• Concentration in tier-1 cities, emerging in tier-2\n• AI-powered forgery; real-time scoring recommended\n• Enhanced KYC and inter-insurer data sharing rising\n",
+                "sources": "Demo Mode",
+                "timestamp": "2025-08-30T12:52:24.712331"
+            },
+            "pincode_intelligence": {
+                "201301": {
+                    "analysis": "Demo: Pincode 201301 has 33.3% fraud rate. Increase monitoring.",
+                    "sources": "Demo Mode",
+                    "timestamp": "2025-08-30T12:52:24.712679"
+                },
+                "395004": {
+                    "analysis": "Demo: Pincode 395004 has 50.0% fraud rate. Increase monitoring.",
+                    "sources": "Demo Mode",
+                    "timestamp": "2025-08-30T12:52:24.712629"
+                },
+                "500074": {
+                    "analysis": "Demo: Pincode 500074 has 33.3% fraud rate. Increase monitoring.",
+                    "sources": "Demo Mode",
+                    "timestamp": "2025-08-30T12:52:24.712566"
+                }
+            }
+        },
+        "recommendations": [
+            {
+                "action": "Suspend new policy approvals in critical risk pincodes",
+                "affected_locations": 1,
+                "priority": "IMMEDIATE"
+            },
+            {
+                "action": "Implement enhanced verification for high-risk areas",
+                "affected_locations": 3,
+                "priority": "HIGH"
+            },
+            {
+                "action": "Deploy real-time fraud scoring algorithms",
+                "affected_locations": "All",
+                "priority": "MEDIUM"
+            },
+            {
+                "action": "Monthly geographic risk assessment updates",
+                "affected_locations": "All",
+                "priority": "ONGOING"
+            }
+        ],
+        "risk_assessment": {
+            "critical_alerts": {
+                "critical_cities": [
+                    {
+                        "City": "Hyderabad",
+                        "fraud_calculations": 17,
+                        "fraud_cases": 10,
+                        "fraud_concentration": 0.5882352941,
+                        "fraud_rate": 0.5882,
+                        "risk_level": "CRITICAL",
+                        "total_customers": 17,
+                        "unique_pincodes": 17
+                    },
+                    {
+                        "City": "Coimbatore",
+                        "fraud_calculations": 13,
+                        "fraud_cases": 7,
+                        "fraud_concentration": 0.5384615385,
+                        "fraud_rate": 0.5385,
+                        "risk_level": "CRITICAL",
+                        "total_customers": 13,
+                        "unique_pincodes": 13
+                    },
+                    {
+                        "City": "Indore",
+                        "fraud_calculations": 10,
+                        "fraud_cases": 5,
+                        "fraud_concentration": 0.5,
+                        "fraud_rate": 0.5,
+                        "risk_level": "CRITICAL",
+                        "total_customers": 10,
+                        "unique_pincodes": 10
+                    },
+                    {
+                        "City": "Kolkata",
+                        "fraud_calculations": 20,
+                        "fraud_cases": 10,
+                        "fraud_concentration": 0.5263157895,
+                        "fraud_rate": 0.5,
+                        "risk_level": "CRITICAL",
+                        "total_customers": 20,
+                        "unique_pincodes": 19
+                    },
+                    {
+                        "City": "Mumbai",
+                        "fraud_calculations": 12,
+                        "fraud_cases": 6,
+                        "fraud_concentration": 0.5,
+                        "fraud_rate": 0.5,
+                        "risk_level": "CRITICAL",
+                        "total_customers": 12,
+                        "unique_pincodes": 12
+                    },
+                    {
+                        "City": "Lucknow",
+                        "fraud_calculations": 19,
+                        "fraud_cases": 9,
+                        "fraud_concentration": 0.4736842105,
+                        "fraud_rate": 0.4737,
+                        "risk_level": "CRITICAL",
+                        "total_customers": 19,
+                        "unique_pincodes": 19
+                    },
+                    {
+                        "City": "Pune",
+                        "fraud_calculations": 25,
+                        "fraud_cases": 10,
+                        "fraud_concentration": 0.4,
+                        "fraud_rate": 0.4,
+                        "risk_level": "CRITICAL",
+                        "total_customers": 25,
+                        "unique_pincodes": 25
+                    }
+                ],
+                "critical_pincodes": [
+                    {
+                        "Pincode": 395004,
+                        "area_name": "Katargam",
+                        "city": "Kolkata",
+                        "deviation_from_mean": 0.075,
+                        "fraud_calculations": 4,
+                        "fraud_cases": 2,
+                        "fraud_rate": 0.5,
+                        "fraud_std": 0.5774,
+                        "is_known_high_risk": true,
+                        "priority_score": 0.4389677866,
+                        "risk_level": "CRITICAL",
+                        "total_customers": 4,
+                        "z_score": 0.1298926221
+                    }
+                ]
+            },
+            "geographic_concentration": {
+                "top_risk_cities": [
+                    {
+                        "City": "Hyderabad",
+                        "fraud_calculations": 17,
+                        "fraud_cases": 10,
+                        "fraud_concentration": 0.5882352941,
+                        "fraud_rate": 0.5882,
+                        "risk_level": "CRITICAL",
+                        "total_customers": 17,
+                        "unique_pincodes": 17
+                    },
+                    {
+                        "City": "Coimbatore",
+                        "fraud_calculations": 13,
+                        "fraud_cases": 7,
+                        "fraud_concentration": 0.5384615385,
+                        "fraud_rate": 0.5385,
+                        "risk_level": "CRITICAL",
+                        "total_customers": 13,
+                        "unique_pincodes": 13
+                    },
+                    {
+                        "City": "Indore",
+                        "fraud_calculations": 10,
+                        "fraud_cases": 5,
+                        "fraud_concentration": 0.5,
+                        "fraud_rate": 0.5,
+                        "risk_level": "CRITICAL",
+                        "total_customers": 10,
+                        "unique_pincodes": 10
+                    },
+                    {
+                        "City": "Kolkata",
+                        "fraud_calculations": 20,
+                        "fraud_cases": 10,
+                        "fraud_concentration": 0.5263157895,
+                        "fraud_rate": 0.5,
+                        "risk_level": "CRITICAL",
+                        "total_customers": 20,
+                        "unique_pincodes": 19
+                    },
+                    {
+                        "City": "Mumbai",
+                        "fraud_calculations": 12,
+                        "fraud_cases": 6,
+                        "fraud_concentration": 0.5,
+                        "fraud_rate": 0.5,
+                        "risk_level": "CRITICAL",
+                        "total_customers": 12,
+                        "unique_pincodes": 12
+                    }
+                ],
+                "top_risk_pincodes": [
+                    {
+                        "Pincode": 500074,
+                        "area_name": "LB Nagar",
+                        "city": "Surat",
+                        "deviation_from_mean": -0.0917,
+                        "fraud_calculations": 6,
+                        "fraud_cases": 2,
+                        "fraud_rate": 0.3333,
+                        "fraud_std": 0.5164,
+                        "is_known_high_risk": true,
+                        "priority_score": 0.4865926569,
+                        "risk_level": "HIGH",
+                        "total_customers": 6,
+                        "z_score": -0.1775755229
+                    },
+                    {
+                        "Pincode": 395004,
+                        "area_name": "Katargam",
+                        "city": "Kolkata",
+                        "deviation_from_mean": 0.075,
+                        "fraud_calculations": 4,
+                        "fraud_cases": 2,
+                        "fraud_rate": 0.5,
+                        "fraud_std": 0.5774,
+                        "is_known_high_risk": true,
+                        "priority_score": 0.4389677866,
+                        "risk_level": "CRITICAL",
+                        "total_customers": 4,
+                        "z_score": 0.1298926221
+                    },
+                    {
+                        "Pincode": 201301,
+                        "area_name": "Noida",
+                        "city": "Surat",
+                        "deviation_from_mean": -0.0917,
+                        "fraud_calculations": 3,
+                        "fraud_cases": 1,
+                        "fraud_rate": 0.3333,
+                        "fraud_std": 0.5774,
+                        "is_known_high_risk": true,
+                        "priority_score": 0.3309646138,
+                        "risk_level": "HIGH",
+                        "total_customers": 3,
+                        "z_score": -0.1588153793
+                    },
+                    {
+                        "Pincode": 110085,
+                        "area_name": "Rohini",
+                        "city": "Delhi",
+                        "deviation_from_mean": -0.0917,
+                        "fraud_calculations": 3,
+                        "fraud_cases": 1,
+                        "fraud_rate": 0.3333,
+                        "fraud_std": 0.5774,
+                        "is_known_high_risk": true,
+                        "priority_score": 0.3309646138,
+                        "risk_level": "HIGH",
+                        "total_customers": 3,
+                        "z_score": -0.1588153793
+                    }
+                ]
+            },
+            "high_priority": {
+                "high_risk_cities": [
+                    {
+                        "City": "Surat",
+                        "fraud_calculations": 19,
+                        "fraud_cases": 7,
+                        "fraud_concentration": 0.3888888889,
+                        "fraud_rate": 0.3684,
+                        "risk_level": "HIGH",
+                        "total_customers": 19,
+                        "unique_pincodes": 18
+                    },
+                    {
+                        "City": "Bangalore",
+                        "fraud_calculations": 23,
+                        "fraud_cases": 8,
+                        "fraud_concentration": 0.347826087,
+                        "fraud_rate": 0.3478,
+                        "risk_level": "HIGH",
+                        "total_customers": 23,
+                        "unique_pincodes": 23
+                    },
+                    {
+                        "City": "Chennai",
+                        "fraud_calculations": 22,
+                        "fraud_cases": 7,
+                        "fraud_concentration": 0.3181818182,
+                        "fraud_rate": 0.3182,
+                        "risk_level": "HIGH",
+                        "total_customers": 22,
+                        "unique_pincodes": 22
+                    },
+                    {
+                        "City": "Delhi",
+                        "fraud_calculations": 20,
+                        "fraud_cases": 6,
+                        "fraud_concentration": 0.3333333333,
+                        "fraud_rate": 0.3,
+                        "risk_level": "HIGH",
+                        "total_customers": 20,
+                        "unique_pincodes": 18
+                    }
+                ],
+                "high_risk_pincodes": [
+                    {
+                        "Pincode": 500074,
+                        "area_name": "LB Nagar",
+                        "city": "Surat",
+                        "deviation_from_mean": -0.0917,
+                        "fraud_calculations": 6,
+                        "fraud_cases": 2,
+                        "fraud_rate": 0.3333,
+                        "fraud_std": 0.5164,
+                        "is_known_high_risk": true,
+                        "priority_score": 0.4865926569,
+                        "risk_level": "HIGH",
+                        "total_customers": 6,
+                        "z_score": -0.1775755229
+                    },
+                    {
+                        "Pincode": 201301,
+                        "area_name": "Noida",
+                        "city": "Surat",
+                        "deviation_from_mean": -0.0917,
+                        "fraud_calculations": 3,
+                        "fraud_cases": 1,
+                        "fraud_rate": 0.3333,
+                        "fraud_std": 0.5774,
+                        "is_known_high_risk": true,
+                        "priority_score": 0.3309646138,
+                        "risk_level": "HIGH",
+                        "total_customers": 3,
+                        "z_score": -0.1588153793
+                    },
+                    {
+                        "Pincode": 110085,
+                        "area_name": "Rohini",
+                        "city": "Delhi",
+                        "deviation_from_mean": -0.0917,
+                        "fraud_calculations": 3,
+                        "fraud_cases": 1,
+                        "fraud_rate": 0.3333,
+                        "fraud_std": 0.5774,
+                        "is_known_high_risk": true,
+                        "priority_score": 0.3309646138,
+                        "risk_level": "HIGH",
+                        "total_customers": 3,
+                        "z_score": -0.1588153793
+                    }
+                ]
+            },
+            "risk_distribution": {
+                "CRITICAL": 1,
+                "HIGH": 3
+            }
+        },
+        "statistical_analysis": {
+            "fraud_distribution": {
+                "by_city": [
+                    {
+                        "City": "Bangalore",
+                        "count": 23,
+                        "mean": 0.3478,
+                        "sum": 8
+                    },
+                    {
+                        "City": "Chennai",
+                        "count": 22,
+                        "mean": 0.3182,
+                        "sum": 7
+                    },
+                    {
+                        "City": "Coimbatore",
+                        "count": 13,
+                        "mean": 0.5385,
+                        "sum": 7
+                    },
+                    {
+                        "City": "Delhi",
+                        "count": 20,
+                        "mean": 0.3,
+                        "sum": 6
+                    },
+                    {
+                        "City": "Hyderabad",
+                        "count": 17,
+                        "mean": 0.5882,
+                        "sum": 10
+                    },
+                    {
+                        "City": "Indore",
+                        "count": 10,
+                        "mean": 0.5,
+                        "sum": 5
+                    },
+                    {
+                        "City": "Kolkata",
+                        "count": 20,
+                        "mean": 0.5,
+                        "sum": 10
+                    },
+                    {
+                        "City": "Lucknow",
+                        "count": 19,
+                        "mean": 0.4737,
+                        "sum": 9
+                    },
+                    {
+                        "City": "Mumbai",
+                        "count": 12,
+                        "mean": 0.5,
+                        "sum": 6
+                    },
+                    {
+                        "City": "Pune",
+                        "count": 25,
+                        "mean": 0.4,
+                        "sum": 10
+                    },
+                    {
+                        "City": "Surat",
+                        "count": 19,
+                        "mean": 0.3684,
+                        "sum": 7
+                    }
+                ],
+                "by_pincode": [
+                    {
+                        "Pincode": 101468,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 110075,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 110085,
+                        "count": 3,
+                        "mean": 0.3333,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 111023,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 113703,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 121398,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 122228,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 148639,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 150151,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 154460,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 156273,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 157986,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 159778,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 168920,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 176077,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 176898,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 177271,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 191288,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 197462,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 201121,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 201301,
+                        "count": 3,
+                        "mean": 0.3333,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 202974,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 208944,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 213688,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 225865,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 229789,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 241835,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 243927,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 256270,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 260811,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 261554,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 273790,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 277129,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 277169,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 293075,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 296582,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 296936,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 328338,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 339190,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 345289,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 346726,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 355564,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 362571,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 364598,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 368116,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 374349,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 381755,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 386543,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 387062,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 395004,
+                        "count": 4,
+                        "mean": 0.5,
+                        "sum": 2
+                    },
+                    {
+                        "Pincode": 395006,
+                        "count": 2,
+                        "mean": 0.5,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 396952,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 399345,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 399907,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 400053,
+                        "count": 2,
+                        "mean": 0.5,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 400066,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 400102,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 400601,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 405415,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 409780,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 423494,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 427073,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 443275,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 445600,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 448980,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 455752,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 473513,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 481864,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 484583,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 489959,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 497751,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 498731,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 500074,
+                        "count": 6,
+                        "mean": 0.3333,
+                        "sum": 2
+                    },
+                    {
+                        "Pincode": 505831,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 508224,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 515872,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 516704,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 530634,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 531459,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 532548,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 532750,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 535126,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 539756,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 540015,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 551457,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 553572,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 557382,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 559297,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 561243,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 567018,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 577508,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 580751,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 582238,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 584353,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 589858,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 590999,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 595062,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 597784,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 601775,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 607994,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 611545,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 613520,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 618728,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 618823,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 624658,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 629983,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 644392,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 647337,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 647473,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 655667,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 659865,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 665158,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 668933,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 670059,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 677621,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 681768,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 682531,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 685894,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 694100,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 694302,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 700034,
+                        "count": 2,
+                        "mean": 0.5,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 700091,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 702292,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 711985,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 723094,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 726256,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 729720,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 734122,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 734965,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 739791,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 740102,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 741058,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 742120,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 746047,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 747049,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 751176,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 754986,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 755920,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 760354,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 761357,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 771155,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 774533,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 776787,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 778387,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 781652,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 786290,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 789050,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 804989,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 809132,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 813304,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 823559,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 825836,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 832635,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 834200,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 840147,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 846055,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 863277,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 864469,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 865791,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 869299,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 872718,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 883413,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 890944,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 897968,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 903083,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 905878,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 907274,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 907400,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 920260,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 932440,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 934082,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 934397,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 943352,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 954016,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 954032,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 954744,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 960563,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 971217,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 972318,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 976336,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 979725,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 980438,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 992769,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    },
+                    {
+                        "Pincode": 994751,
+                        "count": 1,
+                        "mean": 1,
+                        "sum": 1
+                    },
+                    {
+                        "Pincode": 997422,
+                        "count": 1,
+                        "mean": 0,
+                        "sum": 0
+                    }
+                ]
+            },
+            "overall_metrics": {
+                "overall_fraud_rate": 0.425,
+                "total_cities": 11,
+                "total_customers": 200,
+                "total_fraud_cases": 85,
+                "total_pincodes": 185
+            },
+            "statistical_tests": {
+                "overall_fraud_rate": 0.425,
+                "pincode_z_scores": [
+                    {
+                        "Pincode": 101468,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 110075,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 110085,
+                        "count": 3,
+                        "deviation_from_mean": -0.0917,
+                        "fraud_cases": 1,
+                        "fraud_rate": 0.3333,
+                        "std": 0.5774,
+                        "z_score": -0.1585408022
+                    },
+                    {
+                        "Pincode": 111023,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 113703,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 121398,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 122228,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 148639,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 150151,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 154460,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 156273,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 157986,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 159778,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 168920,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 176077,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 176898,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 177271,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 191288,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 197462,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 201121,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 201301,
+                        "count": 3,
+                        "deviation_from_mean": -0.0917,
+                        "fraud_cases": 1,
+                        "fraud_rate": 0.3333,
+                        "std": 0.5774,
+                        "z_score": -0.1585408022
+                    },
+                    {
+                        "Pincode": 202974,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 208944,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 213688,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 225865,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 229789,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 241835,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 243927,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 256270,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 260811,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 261554,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 273790,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 277129,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 277169,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 293075,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 296582,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 296936,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 328338,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 339190,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 345289,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 346726,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 355564,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 362571,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 364598,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 368116,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 374349,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 381755,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 386543,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 387062,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 395004,
+                        "count": 4,
+                        "deviation_from_mean": 0.075,
+                        "fraud_cases": 2,
+                        "fraud_rate": 0.5,
+                        "std": 0.5774,
+                        "z_score": 0.1296680498
+                    },
+                    {
+                        "Pincode": 395006,
+                        "count": 2,
+                        "deviation_from_mean": 0.075,
+                        "fraud_cases": 1,
+                        "fraud_rate": 0.5,
+                        "std": 0.7071,
+                        "z_score": 0.1059172433
+                    },
+                    {
+                        "Pincode": 396952,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 399345,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 399907,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 400053,
+                        "count": 2,
+                        "deviation_from_mean": 0.075,
+                        "fraud_cases": 1,
+                        "fraud_rate": 0.5,
+                        "std": 0.7071,
+                        "z_score": 0.1059172433
+                    },
+                    {
+                        "Pincode": 400066,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 400102,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 400601,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 405415,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 409780,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 423494,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 427073,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 443275,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 445600,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 448980,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 455752,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 473513,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 481864,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 484583,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 489959,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 497751,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 498731,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 500074,
+                        "count": 6,
+                        "deviation_from_mean": -0.0917,
+                        "fraud_cases": 2,
+                        "fraud_rate": 0.3333,
+                        "std": 0.5164,
+                        "z_score": -0.1772323154
+                    },
+                    {
+                        "Pincode": 505831,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 508224,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 515872,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 516704,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 530634,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 531459,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 532548,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 532750,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 535126,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 539756,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 540015,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 551457,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 553572,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 557382,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 559297,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 561243,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 567018,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 577508,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 580751,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 582238,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 584353,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 589858,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 590999,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 595062,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 597784,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 601775,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 607994,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 611545,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 613520,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 618728,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 618823,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 624658,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 629983,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 644392,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 647337,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 647473,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 655667,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 659865,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 665158,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 668933,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 670059,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 677621,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 681768,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 682531,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 685894,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 694100,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 694302,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 700034,
+                        "count": 2,
+                        "deviation_from_mean": 0.075,
+                        "fraud_cases": 1,
+                        "fraud_rate": 0.5,
+                        "std": 0.7071,
+                        "z_score": 0.1059172433
+                    },
+                    {
+                        "Pincode": 700091,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 702292,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 711985,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 723094,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 726256,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 729720,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 734122,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 734965,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 739791,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 740102,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 741058,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 742120,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 746047,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 747049,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 751176,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 754986,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 755920,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 760354,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 761357,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 771155,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 774533,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 776787,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 778387,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 781652,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 786290,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 789050,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 804989,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 809132,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 813304,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 823559,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 825836,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 832635,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 834200,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 840147,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 846055,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 863277,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 864469,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 865791,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 869299,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 872718,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 883413,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 890944,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 897968,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 903083,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 905878,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 907274,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 907400,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 920260,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 932440,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 934082,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 934397,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 943352,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 954016,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 954032,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 954744,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 960563,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 971217,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 972318,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 976336,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 979725,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 980438,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 992769,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    },
+                    {
+                        "Pincode": 994751,
+                        "count": 1,
+                        "deviation_from_mean": 0.575,
+                        "fraud_cases": 1,
+                        "fraud_rate": 1,
+                        "std": null,
+                        "z_score": 0.5744255744
+                    },
+                    {
+                        "Pincode": 997422,
+                        "count": 1,
+                        "deviation_from_mean": -0.425,
+                        "fraud_cases": 0,
+                        "fraud_rate": 0,
+                        "std": null,
+                        "z_score": -0.4245754246
+                    }
+                ],
+                "significant_pincodes": []
+            }
+        },
+        "warnings_alerts": [
+            {
+                "area_name": "Katargam",
+                "city": "Kolkata",
+                "fraud_cases": 2,
+                "fraud_rate": 0.5,
+                "immediate_actions": [
+                    "Suspend new policy approvals pending investigation",
+                    "Implement enhanced KYC verification",
+                    "Cross-reference with fraud databases",
+                    "Initiate site verification for existing policies"
+                ],
+                "known_high_risk": true,
+                "location": "Pincode 395004",
+                "priority": "IMMEDIATE",
+                "total_customers": 4,
+                "type": "CRITICAL_PINCODE_ALERT"
+            },
+            {
+                "affected_pincodes": 17,
+                "fraud_cases": 10,
+                "fraud_rate": 0.5882,
+                "location": "Hyderabad",
+                "priority": "HIGH",
+                "recommended_actions": [
+                    "Enhance regional monitoring protocols",
+                    "Coordinate with local law enforcement",
+                    "Implement city-specific fraud detection rules",
+                    "Increase agent/broker verification"
+                ],
+                "type": "CITY_RISK_ALERT"
+            },
+            {
+                "affected_pincodes": 13,
+                "fraud_cases": 7,
+                "fraud_rate": 0.5385,
+                "location": "Coimbatore",
+                "priority": "HIGH",
+                "recommended_actions": [
+                    "Enhance regional monitoring protocols",
+                    "Coordinate with local law enforcement",
+                    "Implement city-specific fraud detection rules",
+                    "Increase agent/broker verification"
+                ],
+                "type": "CITY_RISK_ALERT"
+            },
+            {
+                "affected_pincodes": 10,
+                "fraud_cases": 5,
+                "fraud_rate": 0.5,
+                "location": "Indore",
+                "priority": "HIGH",
+                "recommended_actions": [
+                    "Enhance regional monitoring protocols",
+                    "Coordinate with local law enforcement",
+                    "Implement city-specific fraud detection rules",
+                    "Increase agent/broker verification"
+                ],
+                "type": "CITY_RISK_ALERT"
+            },
+            {
+                "affected_pincodes": 19,
+                "fraud_cases": 10,
+                "fraud_rate": 0.5,
+                "location": "Kolkata",
+                "priority": "HIGH",
+                "recommended_actions": [
+                    "Enhance regional monitoring protocols",
+                    "Coordinate with local law enforcement",
+                    "Implement city-specific fraud detection rules",
+                    "Increase agent/broker verification"
+                ],
+                "type": "CITY_RISK_ALERT"
+            },
+            {
+                "affected_pincodes": 12,
+                "fraud_cases": 6,
+                "fraud_rate": 0.5,
+                "location": "Mumbai",
+                "priority": "HIGH",
+                "recommended_actions": [
+                    "Enhance regional monitoring protocols",
+                    "Coordinate with local law enforcement",
+                    "Implement city-specific fraud detection rules",
+                    "Increase agent/broker verification"
+                ],
+                "type": "CITY_RISK_ALERT"
+            },
+            {
+                "affected_pincodes": 19,
+                "fraud_cases": 9,
+                "fraud_rate": 0.4737,
+                "location": "Lucknow",
+                "priority": "HIGH",
+                "recommended_actions": [
+                    "Enhance regional monitoring protocols",
+                    "Coordinate with local law enforcement",
+                    "Implement city-specific fraud detection rules",
+                    "Increase agent/broker verification"
+                ],
+                "type": "CITY_RISK_ALERT"
+            },
+            {
+                "affected_pincodes": 25,
+                "fraud_cases": 10,
+                "fraud_rate": 0.4,
+                "location": "Pune",
+                "priority": "HIGH",
+                "recommended_actions": [
+                    "Enhance regional monitoring protocols",
+                    "Coordinate with local law enforcement",
+                    "Implement city-specific fraud detection rules",
+                    "Increase agent/broker verification"
+                ],
+                "type": "CITY_RISK_ALERT"
+            }
+        ]
+    }
+}
