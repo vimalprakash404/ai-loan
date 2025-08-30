@@ -6,7 +6,7 @@ import StepIndicator from '../components/ui/StepIndicator';
 import ProcessingButton from '../components/ui/ProcessingButton';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { MapPin, TrendingUp, AlertTriangle, Users, Shield, CheckCircle, AlertCircle } from 'lucide-react';
-import marketData from '../../marget.json';
+import marketDataImport from '../../marget.json';
 
 const MarketIntelligence = () => {
   const navigate = useNavigate();
@@ -99,13 +99,30 @@ const MarketIntelligence = () => {
 };
 
 const MarketIntelligenceAnalysis = ({ marketData }) => {
+  // Ensure marketData is an array
+  const dataArray = Array.isArray(marketData) ? marketData : 
+                   Array.isArray(marketDataImport) ? marketDataImport :
+                   marketDataImport?.data ? marketDataImport.data : [];
+
+  if (dataArray.length === 0) {
+    return (
+      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+        <div className="text-center py-8">
+          <AlertTriangle className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">No Market Data Available</h3>
+          <p className="text-gray-600">Market intelligence data is not available for analysis.</p>
+        </div>
+      </div>
+    );
+  }
+
   // Calculate insights from the data
-  const totalRecords = marketData.length;
-  const fraudulentRecords = marketData.filter(record => record.is_fraud === 1).length;
+  const totalRecords = dataArray.length;
+  const fraudulentRecords = dataArray.filter(record => record.is_fraud === 1).length;
   const fraudRate = ((fraudulentRecords / totalRecords) * 100).toFixed(1);
   
   // Group by city and calculate risk scores
-  const cityStats = marketData.reduce((acc, record) => {
+  const cityStats = dataArray.reduce((acc, record) => {
     const city = record.city;
     if (!acc[city]) {
       acc[city] = {
@@ -155,10 +172,10 @@ const MarketIntelligenceAnalysis = ({ marketData }) => {
 
   const creditDistribution = creditScoreRanges.map(range => ({
     ...range,
-    count: marketData.filter(record => 
+    count: dataArray.filter(record => 
       record.credit_score >= range.min && record.credit_score <= range.max
     ).length,
-    fraudCount: marketData.filter(record => 
+    fraudCount: dataArray.filter(record => 
       record.credit_score >= range.min && record.credit_score <= range.max && record.is_fraud === 1
     ).length
   }));
@@ -174,10 +191,10 @@ const MarketIntelligenceAnalysis = ({ marketData }) => {
 
   const documentQualityAnalysis = documentQualityRanges.map(range => ({
     range: range.range,
-    total: marketData.filter(record => 
+    total: dataArray.filter(record => 
       record.document_quality_score >= range.min && record.document_quality_score < range.max
     ).length,
-    fraud: marketData.filter(record => 
+    fraud: dataArray.filter(record => 
       record.document_quality_score >= range.min && record.document_quality_score < range.max && record.is_fraud === 1
     ).length
   })).map(item => ({
@@ -187,15 +204,15 @@ const MarketIntelligenceAnalysis = ({ marketData }) => {
 
   // Verification analysis
   const verificationAnalysis = {
-    address: marketData.reduce((acc, record) => {
+    address: dataArray.reduce((acc, record) => {
       acc[record.address_verification_result] = (acc[record.address_verification_result] || 0) + 1;
       return acc;
     }, {}),
-    income: marketData.reduce((acc, record) => {
+    income: dataArray.reduce((acc, record) => {
       acc[record.income_verification_result] = (acc[record.income_verification_result] || 0) + 1;
       return acc;
     }, {}),
-    employment: marketData.reduce((acc, record) => {
+    employment: dataArray.reduce((acc, record) => {
       acc[record.employment_verification_result] = (acc[record.employment_verification_result] || 0) + 1;
       return acc;
     }, {})
@@ -205,23 +222,23 @@ const MarketIntelligenceAnalysis = ({ marketData }) => {
   const riskFactors = [
     {
       factor: 'Low Credit Score',
-      count: marketData.filter(r => r.credit_score < 600).length,
-      percentage: ((marketData.filter(r => r.credit_score < 600).length / totalRecords) * 100).toFixed(1)
+      count: dataArray.filter(r => r.credit_score < 600).length,
+      percentage: ((dataArray.filter(r => r.credit_score < 600).length / totalRecords) * 100).toFixed(1)
     },
     {
       factor: 'High Debt-to-Income',
-      count: marketData.filter(r => r.debt_to_income_ratio > 0.6).length,
-      percentage: ((marketData.filter(r => r.debt_to_income_ratio > 0.6).length / totalRecords) * 100).toFixed(1)
+      count: dataArray.filter(r => r.debt_to_income_ratio > 0.6).length,
+      percentage: ((dataArray.filter(r => r.debt_to_income_ratio > 0.6).length / totalRecords) * 100).toFixed(1)
     },
     {
       factor: 'Poor Document Quality',
-      count: marketData.filter(r => r.document_quality_score < 0.3).length,
-      percentage: ((marketData.filter(r => r.document_quality_score < 0.3).length / totalRecords) * 100).toFixed(1)
+      count: dataArray.filter(r => r.document_quality_score < 0.3).length,
+      percentage: ((dataArray.filter(r => r.document_quality_score < 0.3).length / totalRecords) * 100).toFixed(1)
     },
     {
       factor: 'Failed Employment Verification',
-      count: marketData.filter(r => r.employment_verification_result === 'Failed' || r.employment_verification_result === 'Not Verified').length,
-      percentage: ((marketData.filter(r => r.employment_verification_result === 'Failed' || r.employment_verification_result === 'Not Verified').length / totalRecords) * 100).toFixed(1)
+      count: dataArray.filter(r => r.employment_verification_result === 'Failed' || r.employment_verification_result === 'Not Verified').length,
+      percentage: ((dataArray.filter(r => r.employment_verification_result === 'Failed' || r.employment_verification_result === 'Not Verified').length / totalRecords) * 100).toFixed(1)
     }
   ];
 
