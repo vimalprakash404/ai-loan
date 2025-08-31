@@ -1,10 +1,23 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppContext } from '../context/AppContext';
 import { useBatch } from '../hooks/useBatch';
 import StepIndicator from '../components/ui/StepIndicator';
 import ProcessingButton from '../components/ui/ProcessingButton';
 import CustomerDataTable from '../components/ui/CustomerDataTable';
+
+// Add this import for the chart
+import { Bar } from 'react-chartjs-2';
+import {
+  Chart as ChartJS,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+
+ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 const FraudDetection = () => {
   const navigate = useNavigate();
@@ -171,9 +184,69 @@ const FraudDetection = () => {
       is_fraud: 1
     }
   ];
+
+  // Top 10 feature importance (hardcoded as per image)
+  const featureImportance = useMemo(() => [
+    { feature: 'premium_to_income_ratio', importance: 0.19 },
+    { feature: 'financial_risk_score', importance: 0.19 },
+    { feature: 'credit_score', importance: 0.18 },
+    { feature: 'banking_history_months', importance: 0.155 },
+    { feature: 'financial_distress_indicators', importance: 0.125 },
+    { feature: 'debt_to_income_ratio', importance: 0.08 },
+    { feature: 'identity_verification_composite', importance: 0.035 },
+    { feature: 'document_quality_score', importance: 0.02 },
+    { feature: 'document_consistency_score', importance: 0.015 },
+    { feature: 'identity_match_score', importance: 0.013 },
+  ], []);
+
+  const chartData = useMemo(() => ({
+    labels: featureImportance.map(f => f.feature),
+    datasets: [
+      {
+        label: 'Importance',
+        data: featureImportance.map(f => f.importance),
+        backgroundColor: '#3b82f6',
+        borderRadius: 4,
+        barPercentage: 0.7,
+      },
+    ],
+  }), [featureImportance]);
+
+  const chartOptions = useMemo(() => ({
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: { enabled: true },
+    },
+    scales: {
+      x: {
+        ticks: {
+          callback: function(value, index) {
+            // Show feature names at an angle
+            return this.getLabelForValue(value);
+          },
+          color: '#374151',
+          font: { size: 12 },
+          maxRotation: 45,
+          minRotation: 45,
+        },
+      },
+      y: {
+        beginAtZero: true,
+        max: 0.2,
+        ticks: {
+          color: '#374151',
+          font: { size: 12 },
+        },
+        title: {
+          display: false,
+        },
+      },
+    },
+  }), []);
+
   return (
     <div className="space-y-6 lg:space-y-8">
-      {/* Batch Header */}
       {/* Step Progress */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         <StepIndicator
@@ -224,8 +297,6 @@ const FraudDetection = () => {
         </div>
       </div>
 
-      {/* Customer Data Table */}
-      
       
 
       {/* Results */}
@@ -245,9 +316,10 @@ const FraudDetection = () => {
               <p className="text-2xl font-bold text-green-600">{selectedBatch.results.fraudDetection.accuracy}</p>
             </div>
           </div>
-
         </div>
       )}
+
+      
 
       {selectedBatch.results.fraudDetection && (
         <CustomerDataTable 
@@ -255,6 +327,18 @@ const FraudDetection = () => {
           onExportCSV={console.log("Export CSV clicked")}
         />
       )}
+
+      {/* Feature Importance Chart */}
+      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+        <h3 className="text-lg font-bold text-gray-900 mb-2">
+          Top 10 Feature Importance (Random Forest)
+        </h3>
+        <div className="w-full overflow-x-auto">
+          <div style={{ minWidth: 350, maxWidth: 1000, width: '100%' }}>
+            <Bar data={chartData} options={chartOptions} height={180} />
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
