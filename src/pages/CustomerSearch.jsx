@@ -163,10 +163,10 @@ const CustomerSearch = () => {
         {/* Similarity Analysis Table */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
           <div className="flex items-center gap-3 mb-6">
-            <TrendingUp className="w-6 h-6 text-blue-600" />
+            <TrendingUp className="w-6 h-6 text-green-600" />
             <h3 className="text-lg font-bold text-gray-900">Similarity Analysis</h3>
             <button
-              className="ml-auto px-3 py-1.5 rounded bg-blue-100 text-blue-700 text-xs font-semibold hover:bg-blue-200"
+              className="ml-auto px-3 py-1.5 rounded bg-green-100 text-green-700 text-xs font-semibold hover:bg-green-200"
               onClick={() => exportToCSV(similarityAnalysis, similarityColumns, 'similarity-analysis.csv')}
               type="button"
             >
