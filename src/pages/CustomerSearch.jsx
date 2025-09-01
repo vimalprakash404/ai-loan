@@ -93,7 +93,7 @@ const CustomerSearch = () => {
         <StepIndicator
           stepNumber={3}
           title="Customer Search"
-          isActive={currentStep === 3 && selectedBatch.results.customerSearch === null}
+          isActive={currentStep === 3}
           isCompleted={selectedBatch.results.customerSearch !== null}
           isDisabled={selectedBatch.results.marketIntel === null}
           batchId={selectedBatch.id}
