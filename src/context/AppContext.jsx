@@ -37,7 +37,7 @@ export const AppProvider = ({ children }) => {
       status: 'processing',
       currentStep: 2,
       results: {
-        fraudDetection: { processed: 892, fraudDetected: 67, accuracy: 897-67},
+        fraudDetection: { processed: 892, fraudDetected: 67, accuracy: 92.5 },
         marketIntel: { analyzed: 450, highRiskAreas: 8, avgRiskScore: 5.8 },
         customerSearch: null
       }
