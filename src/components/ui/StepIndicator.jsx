@@ -41,7 +41,7 @@ const StepIndicator = ({ stepNumber, title, isActive, isCompleted, isDisabled, b
           isCompleted ? 'text-green-700' :
           isDisabled ? 'text-gray-400' : 'text-gray-500'
         }`}>
-          {isActive ? 'In Progress' : isCompleted ? 'Completed' : 'Pending'}
+          {isCompleted ? 'Completed' : isActive ? 'In Progress' : 'Pending'}
         </p>
       </div>
     </div>
