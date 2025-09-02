@@ -72,13 +72,7 @@ const ProcessingButton = ({
 
   if (currentStep < 3 && config.nextPath) {
     return (
-      <button
-        onClick={() => onNextStep(config.nextPath)}
-        className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
-      >
-        <NextIcon size={16} />
-        {config.nextText}
-      </button>
+     <></>
     );
   }
 
