@@ -6,7 +6,7 @@ const StepIndicator = ({ stepNumber, title, isActive, isCompleted, isDisabled, b
   const navigate = useNavigate();
 
   const handleClick = () => {
-    if (!isDisabled && batchId && stepPath) {
+   if (!isDisabled && (isActive || isCompleted) && batchId && stepPath) {
       navigate(`/batch/${batchId}/${stepPath}`);
     }
   };

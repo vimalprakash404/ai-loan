@@ -56,7 +56,7 @@ const BatchCard = ({ batch }) => {
           <div className="flex justify-between text-xs text-gray-500">
             <span>Fraud Detection</span>
             <span>Market Intel</span>
-            <span>Customer Search</span>
+            <span></span>
           </div>
         </div>
 
