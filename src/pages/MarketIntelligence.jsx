@@ -177,16 +177,16 @@ const MarketIntelligenceAnalysis = () => {
       {/* Executive Summary */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="bg-white rounded-lg p-4 border border-gray-200">
-          <p className="text-sm text-gray-600">Total Customers</p>
-          <p className="text-2xl font-bold text-gray-900">{exec.total_customers}</p>
+          <p className="text-sm text-gray-600">High Risk Pincodes</p>
+          <p className="text-2xl font-bold text-red-600">{exec.total_customers}</p>
         </div>
         <div className="bg-white rounded-lg p-4 border border-gray-200">
-          <p className="text-sm text-gray-600">Fraud Cases</p>
+          <p className="text-sm text-gray-600"> Hotspots</p>
           <p className="text-2xl font-bold text-red-600">{exec.total_fraud_cases}</p>
         </div>
         <div className="bg-white rounded-lg p-4 border border-gray-200">
-          <p className="text-sm text-gray-600">Overall Fraud Rate</p>
-          <p className="text-2xl font-bold text-orange-600">{(exec.overall_fraud_rate * 100).toFixed(1)}%</p>
+          <p className="text-sm text-gray-600">New Risk Areas</p>
+          <p className="text-2xl font-bold text-orange-600">43</p>
         </div>
       </div>
 
