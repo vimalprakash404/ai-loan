@@ -190,6 +190,62 @@ const MarketIntelligenceAnalysis = () => {
         </div>
       </div>
 
+       {/* Pincode Risk Table */}
+      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+        <div className="flex items-center gap-3 mb-6">
+          <MapPin className="w-6 h-6 text-orange-600" />
+          <h3 className="text-lg font-bold text-gray-900">High-Risk Pincodes</h3>
+          <button
+            className="ml-auto px-3 py-1.5 rounded bg-orange-100 text-orange-700 text-xs font-semibold hover:bg-orange-200"
+            onClick={() => exportToCSV(pincodes, pincodeColumns, 'pincode-risk-analysis.csv')}
+            type="button"
+          >
+            Export CSV
+          </button>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead>
+              <tr className="border-b border-gray-200">
+                <th className="text-left py-3 px-4 font-semibold text-gray-700">Pincode</th>
+                <th className="text-left py-3 px-4 font-semibold text-gray-700">Area</th>
+                <th className="text-left py-3 px-4 font-semibold text-gray-700">City</th>
+                <th className="text-left py-3 px-4 font-semibold text-gray-700">Fraud Rate</th>
+                <th className="text-left py-3 px-4 font-semibold text-gray-700">Risk Level</th>
+                <th className="text-left py-3 px-4 font-semibold text-gray-700">Customers</th>
+              </tr>
+            </thead>
+            <tbody>
+              {pincodes.map((p, idx) => (
+                <tr key={p.Pincode} className="border-b border-gray-100 hover:bg-gray-50">
+                  <td className="py-3 px-4 font-medium text-gray-900">{p.Pincode}</td>
+                  <td className="py-3 px-4 text-gray-700">{p.area_name}</td>
+                  <td className="py-3 px-4 text-gray-700">{p.city}</td>
+                  <td className="py-3 px-4">
+                    <span className={`font-semibold ${
+                      p.risk_level === 'CRITICAL' ? 'text-red-600' :
+                      p.risk_level === 'HIGH' ? 'text-orange-600' : 'text-green-600'
+                    }`}>
+                      {(p.fraud_rate * 100).toFixed(1)}%
+                    </span>
+                  </td>
+                  <td className="py-3 px-4">
+                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                      p.risk_level === 'CRITICAL' ? 'bg-red-100 text-red-700' :
+                      p.risk_level === 'HIGH' ? 'bg-orange-100 text-orange-700' :
+                      'bg-green-100 text-green-700'
+                    }`}>
+                      {p.risk_level}
+                    </span>
+                  </td>
+                  <td className="py-3 px-4 text-gray-700">{p.total_customers}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
       {/* City Risk Table */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
         <div className="flex items-center gap-3 mb-6">
@@ -246,61 +302,7 @@ const MarketIntelligenceAnalysis = () => {
         </div>
       </div>
 
-      {/* Pincode Risk Table */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <div className="flex items-center gap-3 mb-6">
-          <MapPin className="w-6 h-6 text-orange-600" />
-          <h3 className="text-lg font-bold text-gray-900">High-Risk Pincodes</h3>
-          <button
-            className="ml-auto px-3 py-1.5 rounded bg-orange-100 text-orange-700 text-xs font-semibold hover:bg-orange-200"
-            onClick={() => exportToCSV(pincodes, pincodeColumns, 'pincode-risk-analysis.csv')}
-            type="button"
-          >
-            Export CSV
-          </button>
-        </div>
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead>
-              <tr className="border-b border-gray-200">
-                <th className="text-left py-3 px-4 font-semibold text-gray-700">Pincode</th>
-                <th className="text-left py-3 px-4 font-semibold text-gray-700">Area</th>
-                <th className="text-left py-3 px-4 font-semibold text-gray-700">City</th>
-                <th className="text-left py-3 px-4 font-semibold text-gray-700">Fraud Rate</th>
-                <th className="text-left py-3 px-4 font-semibold text-gray-700">Risk Level</th>
-                <th className="text-left py-3 px-4 font-semibold text-gray-700">Customers</th>
-              </tr>
-            </thead>
-            <tbody>
-              {pincodes.map((p, idx) => (
-                <tr key={p.Pincode} className="border-b border-gray-100 hover:bg-gray-50">
-                  <td className="py-3 px-4 font-medium text-gray-900">{p.Pincode}</td>
-                  <td className="py-3 px-4 text-gray-700">{p.area_name}</td>
-                  <td className="py-3 px-4 text-gray-700">{p.city}</td>
-                  <td className="py-3 px-4">
-                    <span className={`font-semibold ${
-                      p.risk_level === 'CRITICAL' ? 'text-red-600' :
-                      p.risk_level === 'HIGH' ? 'text-orange-600' : 'text-green-600'
-                    }`}>
-                      {(p.fraud_rate * 100).toFixed(1)}%
-                    </span>
-                  </td>
-                  <td className="py-3 px-4">
-                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                      p.risk_level === 'CRITICAL' ? 'bg-red-100 text-red-700' :
-                      p.risk_level === 'HIGH' ? 'bg-orange-100 text-orange-700' :
-                      'bg-green-100 text-green-700'
-                    }`}>
-                      {p.risk_level}
-                    </span>
-                  </td>
-                  <td className="py-3 px-4 text-gray-700">{p.total_customers}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+     
 
       {/* Alerts & Warnings */}
       {alerts.length > 0 && (
