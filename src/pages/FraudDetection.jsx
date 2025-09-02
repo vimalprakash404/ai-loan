@@ -302,17 +302,21 @@ const FraudDetection = () => {
       {/* Results */}
       {selectedBatch.results.fraudDetection && (
         <div className="space-y-6">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
             <div className="bg-white rounded-lg p-4 border border-gray-200">
-              <p className="text-sm text-gray-600">Records Processed</p>
+              <p className="text-sm text-gray-600">Total Customers</p>
               <p className="text-2xl font-bold text-gray-900">{selectedBatch.results.fraudDetection.processed.toLocaleString()}</p>
             </div>
             <div className="bg-white rounded-lg p-4 border border-gray-200">
-              <p className="text-sm text-gray-600">Fraud Detected</p>
+              <p className="text-sm text-gray-600">Fraud Cases</p>
               <p className="text-2xl font-bold text-red-600">{selectedBatch.results.fraudDetection.fraudDetected}</p>
             </div>
             <div className="bg-white rounded-lg p-4 border border-gray-200">
-              <p className="text-sm text-gray-600">Not Fraud Records</p>
+              <p className="text-sm text-gray-600">Fraud Rate</p>
+              <p className="text-2xl font-bold text-green-600">{selectedBatch.results.fraudDetection.accuracy}</p>
+            </div>
+            <div className="bg-white rounded-lg p-4 border border-gray-200">
+              <p className="text-sm text-gray-600">Average Fraud Probability</p>
               <p className="text-2xl font-bold text-green-600">{selectedBatch.results.fraudDetection.accuracy}</p>
             </div>
           </div>
@@ -329,7 +333,7 @@ const FraudDetection = () => {
       )}
 
       {/* Feature Importance Chart */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+      {selectedBatch.results.fraudDetection &&(<div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
         <h3 className="text-lg font-bold text-gray-900 mb-2">
           Top 10 Feature Importance (Random Forest)
         </h3>
@@ -338,7 +342,8 @@ const FraudDetection = () => {
             <Bar data={chartData} options={chartOptions} height={180} />
           </div>
         </div>
-      </div>
+      </div>  )}
+      
     </div>
   );
 };

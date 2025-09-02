@@ -14,7 +14,7 @@ const ProcessingButton = ({
         return {
           resultKey: 'fraudDetection',
           processingText: 'Processing...',
-          startText: 'Start Analysis',
+          startText: 'Start Analysis (STEP-1)',
           nextText: 'Next: Market Intelligence',
           nextIcon: TrendingUp,
           nextPath: 'market-intelligence'
@@ -23,7 +23,7 @@ const ProcessingButton = ({
         return {
           resultKey: 'marketIntel',
           processingText: 'Analyzing...',
-          startText: 'Start Analysis',
+          startText: 'Start Analysis (STEP-2)',
           nextText: 'Next: Customer Search',
           nextIcon: Search,
           nextPath: 'customer-search'
@@ -32,7 +32,7 @@ const ProcessingButton = ({
         return {
           resultKey: 'customerSearch',
           processingText: 'Searching...',
-          startText: 'Start Search',
+          startText: 'Start Analysis  (STEP-3)',
           nextText: 'All Steps Completed',
           nextIcon: CheckCircle,
           nextPath: null

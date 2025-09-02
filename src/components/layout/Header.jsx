@@ -1,5 +1,6 @@
 import React from 'react';
 import { Shield } from 'lucide-react';
+import { Link } from 'react-router-dom'; // Add this import
 
 const Header = ({ selectedBatch, currentStep }) => {
   return (
@@ -7,13 +8,15 @@ const Header = ({ selectedBatch, currentStep }) => {
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-blue-600 rounded-lg">
-              <Shield className="w-6 h-6 text-white" />
-            </div>
-            <div>
-              <h1 className="text-xl font-bold text-gray-900">SamAI Shield</h1>
-              <p className="text-xs text-gray-500 hidden sm:block">ML-Powered Detection System</p>
-            </div>
+            <Link to="/" className="flex items-center gap-3 group"> {/* Add Link here */}
+              <div className="p-2 bg-blue-600 rounded-lg group-hover:bg-blue-700 transition">
+                <Shield className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h1 className="text-xl font-bold text-gray-900 group-hover:text-blue-700 transition">SamAI Shield</h1>
+                <p className="text-xs text-gray-500 hidden sm:block">Al-Powered Detection System</p>
+              </div>
+            </Link>
           </div>
           <div className="flex items-center gap-4">
             {selectedBatch && (
